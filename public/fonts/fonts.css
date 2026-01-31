@@ -1,0 +1,32 @@
+/* latin */
+@font-face {
+  font-family: 'pelak';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url('/fonts/pelak/WOFF2/PelakFA-Regular.woff2') format('woff2'), url('/fonts/pelak/WOFF/PelakFA-Regular.woff') format('woff');
+  }
+
+
+/* latin */
+@font-face {
+  font-family: 'pelak';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url('/fonts/pelak/WOFF2/PelakFA-Bold.woff2') format('woff2'), url('/fonts/pelak/WOFF/PelakFA-Bold.woff') format('woff');
+  }
+
+/* latin */
+@font-face {
+  font-family: 'pelak';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url('/fonts/pelak/WOFF2/PelakFA-SemiBold.woff2') format('woff2'), url('/fonts/pelak/WOFF/PelakFA-SemiBold.woff') format('woff');
+  }
+
+
