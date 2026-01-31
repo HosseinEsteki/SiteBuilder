@@ -11,5 +11,12 @@
         "spatie/laravel-sluggable": "^3.4",
         "spatie/laravel-tags": "^4.0",
         "spatie/laravel-medialibrary": "^11.17.10"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Blog\\BlogServiceProvider"
+            ]
+        }
     }
 }
