@@ -1135,7 +1135,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/blog",
-                "reference": "2cf47c40a252c344e84439ccaf5e382e9cb2e654"
+                "reference": "11b43c029b2e0805928e036496231d03a39822e0"
             },
             "require": {
                 "spatie/laravel-medialibrary": "^11.17.10",
@@ -1143,6 +1143,13 @@
                 "spatie/laravel-tags": "^4.0"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Blog\\Providers\\BlogServiceProvider"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Modules\\Blog\\": "src/"
@@ -7903,16 +7910,16 @@
         },
         {
             "name": "laravel/boost",
-            "version": "v2.0.4",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/boost.git",
-                "reference": "6f7a9f70c1b2cc5fcef1585e8aa04b8546f150e9"
+                "reference": "00eede2041a9bac83eabbd3b3f16bd4aa91277c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/boost/zipball/6f7a9f70c1b2cc5fcef1585e8aa04b8546f150e9",
-                "reference": "6f7a9f70c1b2cc5fcef1585e8aa04b8546f150e9",
+                "url": "https://api.github.com/repos/laravel/boost/zipball/00eede2041a9bac83eabbd3b3f16bd4aa91277c9",
+                "reference": "00eede2041a9bac83eabbd3b3f16bd4aa91277c9",
                 "shasum": ""
             },
             "require": {
@@ -7965,7 +7972,7 @@
                 "issues": "https://github.com/laravel/boost/issues",
                 "source": "https://github.com/laravel/boost"
             },
-            "time": "2026-01-28T13:53:50+00:00"
+            "time": "2026-02-01T09:52:44+00:00"
         },
         {
             "name": "laravel/breeze",
