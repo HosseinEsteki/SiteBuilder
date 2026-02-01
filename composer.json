@@ -19,6 +19,9 @@
         {
             "type": "path",
             "url": "modules/blog"
+        },{
+            "type": "path",
+            "url": "modules/ecommerce"
         },
         {
             "type": "path",
@@ -31,6 +34,7 @@
     "require": {
         "hosseinesteki/blog": "^1.0",
         "hosseinesteki/admin-panel": "^1.0",
+        "hosseinesteki/ecommerce": "^1.0",
         "php": "^8.2",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
@@ -121,6 +125,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
