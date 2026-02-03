@@ -8,18 +8,12 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Modules\\Ecommerce\\": "modules/ecommerce/src/",
-            "Modules\\AdminPanel\\": "modules/admin-panel/src/",
-            "Modules\\Blog\\": "modules/blog/src/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "modules/blog"
-        },{
             "type": "path",
             "url": "modules/ecommerce"
         },
@@ -29,12 +23,15 @@
             "options": {
                 "symlink": true
             }
+        },{
+            "type": "path",
+            "url": "modules/blog"
         }
     ],
     "require": {
-        "hosseinesteki/blog": "^1.0",
         "hosseinesteki/admin-panel": "^1.0",
         "hosseinesteki/ecommerce": "^1.0",
+        "hosseinesteki/blog": "^1.0",
         "php": "^8.2",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
