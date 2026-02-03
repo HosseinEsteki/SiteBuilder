@@ -2,6 +2,8 @@
 
 return [
 
+    'currency' => env('MONEY_DEFAULT_CURRENCY', 'IRT'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
