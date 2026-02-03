@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Blog\Database\Seeders\BlogPermissionSeeder;
+use Blog\Database\Seeders\BlogSeeder;
+use Ecommerce\Database\Seeders\EcommercePermissionSeeder;
 use Illuminate\Database\Seeder;
-use Modules\Blog\Database\Seeders\BlogPermissionSeeder;
-use Modules\Blog\Database\Seeders\BlogSeeder;
+use Ecommerce\Database\Seeders\EcommerceSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,10 +20,14 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
         $this->call([
             BlogSeeder::class,
-            BlogPermissionSeeder::class,
+            EcommerceSeeder::class,
         ]);
         /* در انتها ساخته بشه */
-        $this->call([RoleSeeder::class]);
+        $this->call([
+            BlogPermissionSeeder::class,
+            EcommercePermissionSeeder::class,
+            RoleSeeder::class
+        ]);
 
     }
 }
