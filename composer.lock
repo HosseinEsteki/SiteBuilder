@@ -2604,7 +2604,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/email",
-                "reference": "8128ba7543dfd05d0f6db2c18a1f88b0bddeec33"
+                "reference": "5eeee25d7c137f03f4463cdba3a91a70b4aec5ed"
             },
             "require": {
                 "spatie/laravel-sitemap": "^7.3.8"
@@ -2613,7 +2613,7 @@
             "extra": {
                 "laravel": {
                     "providers": [
-                        "Email\\Providers\\SeoServiceProvider"
+                        "Email\\Providers\\EmailServiceProvider"
                     ]
                 }
             },
