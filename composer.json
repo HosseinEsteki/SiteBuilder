@@ -26,10 +26,18 @@
         },{
             "type": "path",
             "url": "modules/blog"
+        },{
+            "type": "path",
+            "url": "modules/seo"
+        },{
+            "type": "path",
+            "url": "modules/email"
         }
     ],
     "require": {
         "hosseinesteki/admin-panel": "^1.0",
+        "hosseinesteki/seo": "^1.0",
+        "hosseinesteki/email": "^1.0",
         "hosseinesteki/ecommerce": "^1.0",
         "hosseinesteki/blog": "^1.0",
         "php": "^8.2",
