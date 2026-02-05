@@ -32,10 +32,14 @@
         },{
             "type": "path",
             "url": "modules/email"
+        },{
+            "type": "path",
+            "url": "modules/activity-log"
         }
     ],
     "require": {
         "hosseinesteki/admin-panel": "^1.0",
+        "hosseinesteki/activity-log": "^1.0.0",
         "hosseinesteki/seo": "^1.0",
         "hosseinesteki/email": "^1.0",
         "hosseinesteki/ecommerce": "^1.0",
