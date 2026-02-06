@@ -9,6 +9,7 @@ use Blog\Database\Seeders\BlogSeeder;
 use Ecommerce\Database\Seeders\EcommercePermissionSeeder;
 use Illuminate\Database\Seeder;
 use Ecommerce\Database\Seeders\EcommerceSeeder;
+use Illuminate\Support\Facades\Auth;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create();
+        Auth::loginUsingId(1);
         $this->call([
             OrganizationSeeder::class,
             BlogSeeder::class,
