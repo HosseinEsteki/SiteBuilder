@@ -1,0 +1,33 @@
+<?php
+
+return [
+    'Add' => 'افزودن',
+    'Text' => 'نوشته',
+    'Heading' => 'سرتیتر',
+    'Image' => 'تصویر',
+    'Delimiter' => 'جداکننده',
+    'List' => 'لیست',
+    'Quote' => 'نقل قول',
+    'Table' => 'جدول',
+    'Raw HTML' => 'کد HTML',
+    'Code' => 'کد',
+    'Checklist' => 'چک لیست',
+    'content' => 'محتوا',
+    'upload_image' => 'آپلود تصویر',
+    'insert_image' => 'درج تصویر',
+    'delete_image' => 'حذف تصویر',
+    'edit_image' => 'ویرایش تصویر',
+    'quote' => 'نقل‌قول',
+    'paragraph' => 'پاراگراف',
+    'header' => 'سرتیتر',
+    'list' => 'لیست',
+    'raw' => 'کد HTML خام',
+    'table' => 'جدول',
+    'warning' => 'هشدار',
+    'error' => 'خطایی رخ داده است',
+    'alignment' => 'چیدمان',
+    'caption' => 'زیرنویس',
+    'save' => 'ذخیره',
+    'cancel' => 'انصراف',
+
+];

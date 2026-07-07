@@ -1,0 +1,20 @@
+/*.editorjs-box {*/
+/*    border: 1px solid #1a1a1a;*/
+/*    border-radius: 8px;          !* گوشه‌های گرد *!*/
+/*    background-color: rgba(0, 0, 0, 0.17);   !* بک‌گراند روشن *!*/
+/*    padding: 1rem;               !* فاصله داخلی *!*/
+/*    margin-top: 1rem;            !* فاصله از بالا *!*/
+/*}*/
+/*.toggle-input{*/
+/*    display: flex !important;*/
+/*    align-items: center;*/
+/*}*/
+/*.toggle-input .fi-sc-component .fi-fo-field-label-col{*/
+/*    align-items: center;*/
+/*}*/
+@media (min-width: 1024px) {
+    .toggle-input{
+        padding-top: 35px;
+    }
+}
+

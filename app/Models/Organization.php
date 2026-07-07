@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -10,15 +11,43 @@ class Organization extends Model
 {
     use InteractsWithMedia;
     protected $fillable = [
-        'name',
-        'website',
-        'phone',
-        'social_links',
+        'key',
+        'value',
+        'category',
     ];
+    protected $appends=['category_label','name_label'];
+    public static function all($columns = ['*'])
+    {
+        $settings = \App\Models\Organization::
+        query()
+            ->groupBy('category', 'key')
+            ->get()
+            ->groupBy('category')
+            ->collect()
+        ;
+        return collect($settings);
+    }
 
-    protected $casts = [
-        'social_links' => 'array',
-    ];
+    public static function getCategoryLabel(string $category)
+    {
+        return trans('organization.'.$category.'.label');
+    }
+
+
+    protected function categoryLabel(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, array $attributes) => trans("organization.{$this->category}.label"),
+        );
+    }
+
+    protected function nameLabel(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, array $attributes) => trans("organization.{$this->category}.{$this->key}")
+        );
+    }
+
 
     public function registerMediaConversions(?Media $media = null): void
     {

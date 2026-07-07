@@ -1,0 +1,22 @@
+{
+    "name": "hosseinesteki/public-module",
+    "version": "1.0.0",
+    "description": "public",
+    "autoload": {
+        "psr-4": {
+            "Public\\": "src/"
+        }
+    },
+    "require": {
+        "spatie/laravel-sluggable": "^3.4",
+        "spatie/laravel-tags": "^4.0",
+        "spatie/laravel-medialibrary": "^11.17.10"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Public\\Providers\\PublicServiceProvider"
+            ]
+        }
+    }
+}

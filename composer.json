@@ -19,10 +19,7 @@
         },
         {
             "type": "path",
-            "url": "modules/admin-panel",
-            "options": {
-                "symlink": true
-            }
+            "url": "modules/admin-panel"
         },{
             "type": "path",
             "url": "modules/blog"
@@ -35,16 +32,24 @@
         },{
             "type": "path",
             "url": "modules/activity-log"
+        },{
+            "type": "path",
+            "url": "modules/public"
         }
     ],
     "require": {
-        "hosseinesteki/admin-panel": "^1.0",
+        "php": "^8.4",
+        "ariaieboy/filament-jalali": "^3.0",
+        "hosseinesteki/filament-editorjs": "^2.3.1",
+        "filament/spatie-laravel-tags-plugin": "^5.2",
+        "hekmatinasser/verta": "^8.5",
         "hosseinesteki/activity-log": "^1.0.0",
-        "hosseinesteki/seo": "^1.0",
-        "hosseinesteki/email": "^1.0",
-        "hosseinesteki/ecommerce": "^1.0",
+        "hosseinesteki/admin-panel": "^1.0",
         "hosseinesteki/blog": "^1.0",
-        "php": "^8.2",
+        "hosseinesteki/ecommerce": "^1.0",
+        "hosseinesteki/email": "^1.0",
+        "hosseinesteki/public-module": "^1.0.0",
+        "hosseinesteki/seo": "^1.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^4.1",

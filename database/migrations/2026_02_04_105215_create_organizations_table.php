@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');                // نام سازمان
-            $table->string('website')->nullable(); // وبسایت
-            $table->string('phone')->nullable();   // تلفن
-            $table->json('social_links')->nullable(); // لینک شبکه‌های اجتماعی
+            $table->string('key')->nullable();
+            $table->string('value')->nullable();
+            $table->string('category')->nullable();
             $table->timestamps();
         });
 

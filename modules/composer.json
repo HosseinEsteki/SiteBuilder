@@ -1,0 +1,37 @@
+{
+    "name": "hosseinesteki/modules-installer",
+    "description": "modules-installer",
+    "type": "library",
+    "version": "1.0.0",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "ecommerce"
+        },
+        {
+            "type": "path",
+            "url": "admin-panel"
+        },{
+            "type": "path",
+            "url": "blog"
+        },{
+            "type": "path",
+            "url": "seo"
+        },{
+            "type": "path",
+            "url": "email"
+        },{
+            "type": "path",
+            "url": "activity-log"
+        }
+    ],
+    "require": {
+        "hosseinesteki/activity-log": "^1.0.0",
+        "hosseinesteki/admin-panel": "^1.0",
+        "hosseinesteki/seo": "^1.0",
+        "hosseinesteki/email": "^1.0",
+        "hosseinesteki/ecommerce": "^1.0",
+        "hosseinesteki/blog": "^1.0"
+    }
+}

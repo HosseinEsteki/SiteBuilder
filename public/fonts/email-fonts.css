@@ -1,0 +1,7 @@
+/* latin */
+@font-face {
+  font-family: 'pelak';
+  font-stretch: 100%;
+  font-display: swap;
+  src: url('https://hosseinesteki.ir/fonts/pelak/WOFF2/PelakFA-Regular.woff2') format('woff2'), url('https://hosseinesteki.ir/fonts/pelak/WOFF/PelakFA-Regular.woff') format('woff');
+  }

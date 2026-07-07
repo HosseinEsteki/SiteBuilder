@@ -13,6 +13,11 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 Route::resource('organizations', \App\Http\Controllers\OrganizationController::class);
+Route::get('test', function () {
+
+    return view('theme.blog.noonPost.login');
+}
+);
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

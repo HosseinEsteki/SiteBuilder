@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Organization;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\Organization;
 use Illuminate\Database\Seeder;
 
 class OrganizationSeeder extends Seeder
@@ -13,15 +12,17 @@ class OrganizationSeeder extends Seeder
      */
     public function run(): void
     {
-        Organization::query()->create([
-            'name'=>'فروشگاه کفش کفشولو',
-            'website'=>'https://kafshooloo.ir',
-            'phone'=>'09131234568',
-            'social_links'=>json_encode([
-                'instagram'=>'https://instagram.com/kafshooloo',
-                'youtube'=>'https://youtube.com/kafshooloo',
-                'telegram'=>'https://telegram.me/kafshooloo',
-            ]),
-        ]);
+        $settings = [
+            ['key' => 'name', 'value' => 'فروشگاه کفش کفشولو','category'=>'main'],
+            ['key' => 'website', 'value' => 'https://kafshooloo.ir','category'=>'main'],
+            ['key' => 'phone', 'value' => '09131234568','category'=>'main'],
+            ['key' => 'instagram', 'value' => 'https://instagram.com/kafshooloo','category'=>'social'],
+            ['key' => 'youtube', 'value' => 'https://youtube.com/kafshooloo','category'=>'social'],
+            ['key' => 'telegram', 'value' => 'https://telegram.me/kafshooloo','category'=>'social'],
+        ];
+        foreach ($settings as $setting){
+            \App\Models\Organization::query()->create($setting);
+        }
+
     }
 }
