@@ -1,0 +1,24 @@
+{
+    "name": "hosseinesteki/activity-log",
+    "version": "1.0.0",
+    "description": "Laravel Activity Log Module for CRUD tracking and analytics",
+    "autoload": {
+        "psr-4": {
+            "ActivityLog\\": "src/"
+        }
+    },
+    "require": {
+        "laravel/framework": "^12.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ActivityLog\\Providers\\ActivityLogServiceProvider"
+            ],
+            "aliases": {
+                "ActivityLog": "ActivityLog\\Facades\\ActivityLog"
+            }
+
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "name": "hosseinesteki/email",
+    "description": "Laravel Email Module: Email manager for Website",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "require": {
+        "spatie/laravel-sitemap": "^7.3.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Email\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Email\\Providers\\EmailServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

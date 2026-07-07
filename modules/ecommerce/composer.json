@@ -1,0 +1,28 @@
+{
+    "name": "hosseinesteki/ecommerce",
+    "description": "Ecommerce package for managing products, categories, brands, orders, carts, and payments.",
+    "version": "1.0.0",
+    "license": "MIT",
+    "require": {
+
+        "spatie/laravel-medialibrary": "^11.17.10",
+        "cknow/laravel-money": "^8.4",
+        "cviebrock/eloquent-sluggable": "^12.0",
+        "a-sabagh/laravel-iran-payment": "dev-main as 1.0"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Ecommerce\\": "src/",
+            "Database\\Factories\\Ecommerce\\Models\\": "src/Database/Factories/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ecommerce\\Providers\\EcommerceServiceProvider",
+                "Ecommerce\\Providers\\EcommerceRouteServiceProvider"
+            ]
+        }
+    }
+}
