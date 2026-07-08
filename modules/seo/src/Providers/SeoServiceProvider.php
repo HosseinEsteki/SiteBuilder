@@ -5,6 +5,7 @@ namespace Seo\Providers;
 use Seo\Console\Commands\GenerateSitemap;
 use Illuminate\Support\ServiceProvider;
 use Artesaos\SEOTools\Facades\SEOTools;
+use Seo\Jobs\Middleware\RedirectMiddleware;
 use Seo\Models\Redirect;
 use Seo\SeoManager;
 use Seo\Services\MetaManager;
@@ -32,13 +33,16 @@ class SeoServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/seo.php');
 
         // بارگذاری ویوها
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'seo');
+        $viewsPath = __DIR__ . '/../resources/views';
+        if (is_dir($viewsPath)) {
+            $this->loadViewsFrom($viewsPath, 'seo');
+        }
 
         // بارگذاری مایگریشن‌ها
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         //بارگذاری میدل ورها
-        $router->aliasMiddleware('seo.redirect', Redirect::class);
+        $router->aliasMiddleware('seo.redirect', RedirectMiddleware::class);
 
         // بارگذاری Command
         if ($this->app->runningInConsole()) {

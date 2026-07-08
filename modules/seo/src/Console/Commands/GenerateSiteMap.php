@@ -3,7 +3,7 @@
 namespace Seo\Console\Commands;
 
 use Blog\Models\Article;
-use Blog\Models\Category;
+use Ecommerce\Models\Category;
 use Ecommerce\Models\Product;
 use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
@@ -16,43 +16,39 @@ class GenerateSitemap extends Command
 
     public function handle(): void
     {
-        $sitemap = Sitemap::create();
+        $sitemap = Sitemap::create()
+            ->add(Url::create(url('/'))->setPriority(1.0))
+            ->add(Url::create(url('/blog/articles'))->setPriority(0.8))
+            ->add(Url::create(url('/blog/categories'))->setPriority(0.7))
+            ->add(Url::create(url('/ecommerce/products'))->setPriority(0.8))
+            ->add(Url::create(url('/ecommerce/categories'))->setPriority(0.7));
 
-        // صفحات استاتیک
-        $sitemap->add(Url::create(route('home'))->setPriority(1.0));
-        $sitemap->add(Url::create(route('about'))->setPriority(0.8));
-        $sitemap->add(Url::create(route('contact'))->setPriority(0.8));
-
-        // مقالات داینامیک
-        Article::all()->each(function ($article) use ($sitemap) {
+        Article::query()->each(function (Article $article) use ($sitemap) {
             $sitemap->add(
-                Url::create(route('articles.show', $article))
+                Url::create(url('/blog/articles/'.$article->slug))
                     ->setLastModificationDate($article->updated_at)
                     ->setPriority(0.9)
             );
         });
 
-        // محصولات داینامیک
-        Product::all()->each(function ($product) use ($sitemap) {
+        Product::query()->each(function (Product $product) use ($sitemap) {
             $sitemap->add(
-                Url::create(route('products.show', $product))
+                Url::create(url('/ecommerce/products/'.$product->slug))
                     ->setLastModificationDate($product->updated_at)
                     ->setPriority(0.9)
             );
         });
 
-        // دسته‌بندی‌ها
-        Category::all()->each(function ($category) use ($sitemap) {
+        Category::query()->each(function (Category $category) use ($sitemap) {
             $sitemap->add(
-                Url::create(route('categories.show', $category))
+                Url::create(url('/ecommerce/categories/'.$category->slug))
                     ->setLastModificationDate($category->updated_at)
                     ->setPriority(0.7)
             );
         });
 
-        // ذخیره فایل
         $sitemap->writeToFile(public_path('sitemap.xml'));
 
-        $this->info('✅ Sitemap generated successfully at public/sitemap.xml');
+        $this->info('Sitemap generated successfully at public/sitemap.xml');
     }
 }

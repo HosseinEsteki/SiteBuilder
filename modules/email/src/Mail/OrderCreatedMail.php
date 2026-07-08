@@ -11,16 +11,13 @@ class OrderCreatedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Order $order;
-
-    public function __construct(Order $order)
-    {
-        $this->order = $order;
-    }
+    public function __construct(
+        public Order $order
+    ) {}
 
     public function build()
     {
-        return $this->subject('سفارش جدید ثبت شد')
+        return $this->subject('Order created')
             ->view('email::emails.order_created');
     }
 }

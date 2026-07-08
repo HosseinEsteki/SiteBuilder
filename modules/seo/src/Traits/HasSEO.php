@@ -3,6 +3,9 @@
 namespace Seo\Traits;
 
 use App\Helpers\SeoHelper;
+use Blog\Models\Article;
+use Ecommerce\Models\Category as EcommerceCategory;
+use Ecommerce\Models\Product;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Seo\Services\MetaManager;
 
@@ -57,7 +60,12 @@ trait HasSEO
      */
     public function getSeoUrl(): string
     {
-        return route(strtolower(class_basename($this)).'.show', $this->id);
+        return match (true) {
+            $this instanceof Article => url('/blog/articles/'.$this->slug),
+            $this instanceof Product => url('/ecommerce/products/'.$this->slug),
+            $this instanceof EcommerceCategory => url('/ecommerce/categories/'.$this->slug),
+            default => url('/'),
+        };
     }
 
     /**
