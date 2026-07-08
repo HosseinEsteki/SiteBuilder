@@ -17,7 +17,7 @@ class OrderService
         $order = $this->repository->create([
             'user_id' => $cart->user_id,
             'status' => 'pending',
-            'total' => $cart->items->sum(fn ($item) => $item->quantity * $item->product->price),
+            'total_price' => $cart->items->sum(fn ($item) => $item->quantity * $item->product->price),
         ]);
 
         foreach ($cart->items as $item) {

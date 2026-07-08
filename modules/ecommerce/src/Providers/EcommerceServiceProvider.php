@@ -20,7 +20,10 @@ class EcommerceServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../Database/migrations');
 
         // بارگذاری ویوها (اگر داشتی)
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'ecommerce');
+        $viewsPath = __DIR__.'/../resources/views';
+        if (is_dir($viewsPath)) {
+            $this->loadViewsFrom($viewsPath, 'ecommerce');
+        }
 
         // بارگذاری کانفیگ‌ها
         $this->mergeConfigFrom(__DIR__.'/../config/tags.php', 'tags');

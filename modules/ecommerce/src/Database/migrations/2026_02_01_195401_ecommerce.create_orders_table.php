@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('total_shipping')->default(0)->nullable();
             $table->text('shipping_address')->nullable();
             $table->text('shipping_code')->nullable();
-            $table->text('shipping_user');
+            $table->text('shipping_user')->nullable();
 
             $table->text('description')->nullable();
 

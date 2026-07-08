@@ -9,68 +9,62 @@ use Ecommerce\Models\Product;
 
 class OrderController
 {
-    /**
-     * لیست همه سفارش‌ها
-     */
     public function index()
     {
         return response()->json(Order::with('items.product')->get());
     }
 
-    /**
-     * نمایش یک سفارش
-     */
     public function show(Order $order)
     {
         return response()->json($order->load('items.product'));
     }
 
-    /**
-     * ساخت سفارش جدید
-     */
     public function store(OrderStoreRequest $request)
     {
         $data = $request->validated();
+        $total = $data['total_price'] ?? $data['total'] ?? $this->calculateItemsTotal($data['items']);
 
         $order = Order::create([
             'user_id' => $data['user_id'],
             'status' => $data['status'],
-            'total' => collect($data['items'])->sum(fn($item) => $item['quantity'] * Product::find($item['product_id'])->price
-            ),
+            'original_total' => $total,
+            'total_price' => $total,
             'payment_ref' => $data['payment_ref'] ?? null,
         ]);
 
         foreach ($data['items'] as $item) {
+            $product = Product::findOrFail($item['product_id']);
+
             $order->items()->create([
-                'product_id' => $item['product_id'],
+                'product_id' => $product->id,
                 'quantity' => $item['quantity'],
-                'price' => Product::find($item['product_id'])->price,
+                'price' => $item['price'] ?? $product->price,
             ]);
         }
 
         return response()->json($order->load('items.product'), 201);
     }
 
-    /**
-     * بروزرسانی سفارش
-     */
     public function update(OrderUpdateRequest $request, Order $order)
     {
         $data = $request->validated();
 
         $order->update([
             'status' => $data['status'] ?? $order->status,
-            'total' => $data['total'] ?? $order->total,
+            'total_price' => $data['total_price'] ?? $data['total'] ?? $order->total_price,
             'payment_ref' => $data['payment_ref'] ?? $order->payment_ref,
         ]);
 
         if (isset($data['items'])) {
             $order->items()->delete();
+
             foreach ($data['items'] as $item) {
+                $product = Product::findOrFail($item['product_id']);
+
                 $order->items()->create([
-                    'product_id' => $item['product_id'],
+                    'product_id' => $product->id,
                     'quantity' => $item['quantity'],
-                    'price' => Product::find($item['product_id'])->price,
+                    'price' => $item['price'] ?? $product->price,
                 ]);
             }
         }
@@ -78,13 +72,19 @@ class OrderController
         return response()->json($order->load('items.product'));
     }
 
-    /**
-     * حذف سفارش
-     */
     public function destroy(Order $order)
     {
         $order->delete();
+
         return response()->json(['message' => 'Order deleted']);
     }
 
+    private function calculateItemsTotal(array $items): int|float
+    {
+        return collect($items)->sum(function (array $item) {
+            $product = Product::findOrFail($item['product_id']);
+
+            return $item['quantity'] * ($item['price'] ?? $product->price);
+        });
+    }
 }

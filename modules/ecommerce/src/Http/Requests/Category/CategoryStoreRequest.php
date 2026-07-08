@@ -15,7 +15,7 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             'name'        => 'required|string|max:255',
-            'slug'        => 'required|string|max:255|unique:ecommerce_categories,slug,' . $this->category->id,
+            'slug'        => 'required|string|max:255|unique:ecommerce_categories,slug',
             'logo' => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'description' => 'required|string',
         ];

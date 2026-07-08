@@ -7,6 +7,7 @@ enum OrderStatus: string
     case Pending = 'pending';
     case Processing = 'processing';
     case Paid = 'paid';
+    case Failed = 'failed';
     case Shipped = 'shipped';
     case Completed = 'completed';
     case Cancelled = 'cancelled';
@@ -43,6 +44,7 @@ enum OrderStatus: string
             self::Pending => 'info',
             self::Processing => 'warning',
             self::Paid => 'success',
+            self::Failed => 'danger',
             self::Shipped => 'secondary',
             self::Completed => 'dark',
             self::Cancelled => 'danger',

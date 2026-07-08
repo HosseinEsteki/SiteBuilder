@@ -7,6 +7,7 @@ use Ecommerce\Http\Controllers\CheckoutController;
 use Ecommerce\Http\Controllers\OrderController;
 use Ecommerce\Http\Controllers\PaymentController;
 use Ecommerce\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('ecommerce')->middleware('web')->group(function () {
 

@@ -15,7 +15,7 @@ class ProductStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:ecommerce_products,slug,'.$this->product->id,
+            'slug' => 'required|string|max:255|unique:ecommerce_products,slug',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',

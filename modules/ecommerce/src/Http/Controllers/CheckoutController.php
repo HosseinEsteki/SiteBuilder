@@ -10,78 +10,67 @@ use Ecommerce\Services\PaymentService;
 
 class CheckoutController
 {
-    protected $discountService;
+    public function __construct(
+        protected DiscountService $discountService
+    ) {}
 
-    public function __construct(DiscountService $discountService)
-    {
-        $this->discountService = $discountService;
-    }
-
-    /**
-     * اجرای فرآیند Checkout
-     */
     public function store(CheckoutRequest $request, PaymentService $paymentService)
     {
         $data = $request->validated();
-
-        // 1. محاسبه مجموع اولیه سبد خرید
         $cartItems = collect($data['items']);
-        $originalTotal = $cartItems->sum(fn ($item) =>
-            $item['quantity'] * Product::find($item['product_id'])->price
-        );
+        $originalTotal = $cartItems->sum(function (array $item) {
+            return $item['quantity'] * Product::findOrFail($item['product_id'])->price;
+        });
 
-        // ساخت یک آبجکت ساده Cart برای سرویس تخفیف
         $cart = new class($cartItems, $originalTotal) {
-            public $items;
-            public $total;
-            public $shipping_cost = 50000; // مثال: هزینه ارسال ثابت
+            public int $shipping_cost = 50000;
 
-            public function __construct($items, $total)
-            {
-                $this->items = $items;
-                $this->total = $total;
-            }
+            public function __construct(
+                public $items,
+                public int|float $total
+            ) {}
 
-            public function total()
+            public function total(): int|float
             {
                 return $this->total;
             }
 
-            public function itemsCount()
+            public function itemsCount(): int
             {
                 return $this->items->sum('quantity');
             }
         };
 
-        // 2. اعمال تخفیف‌ها
-        $couponCode = $data['coupon'] ?? null;
-        $discountResult = $this->discountService->applyDiscounts($cart, $couponCode, $data['user_id']);
+        $discountResult = $this->discountService->applyDiscounts($cart, $data['coupon'] ?? null);
 
-        // 3. ساخت سفارش با مبلغ نهایی
         $order = Order::create([
             'user_id' => $data['user_id'],
             'status' => 'pending',
             'original_total' => $discountResult['original_total'],
             'discount' => $discountResult['discount'],
-            'total' => $discountResult['final_total'],
+            'total_price' => $discountResult['final_total'],
+            'total_shipping' => $cart->shipping_cost,
+            'shipping_address' => $data['shipping']['address'],
+            'shipping_code' => $data['shipping']['zip'],
+            'shipping_user' => (string) $data['user_id'],
             'payment_ref' => $data['payment']['token'],
         ]);
 
-        // 4. افزودن آیتم‌ها به سفارش
         foreach ($data['items'] as $item) {
+            $product = Product::findOrFail($item['product_id']);
+
             $order->items()->create([
-                'product_id' => $item['product_id'],
+                'product_id' => $product->id,
                 'quantity' => $item['quantity'],
-                'price' => Product::find($item['product_id'])->price,
+                'price' => $product->price,
             ]);
         }
 
-        // 5. اجرای پرداخت
-        $paymentResult = $paymentService->verify($order, true);
+        $paymentResult = $paymentService->verify($order, $data['payment']['token']);
+        $order->update(['status' => $paymentResult ? 'paid' : 'failed']);
 
-        // 6. پاسخ نهایی
         return response()->json([
-            'order' => $order->load('items'),
+            'order' => $order->fresh()->load('items.product'),
             'payment' => $paymentResult ? 'success' : 'failed',
         ], 201);
     }

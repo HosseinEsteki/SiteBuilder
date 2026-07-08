@@ -3,6 +3,7 @@
 
 namespace Ecommerce\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,6 +29,14 @@ class Order extends Model
         'description'
     ];
 protected $table = 'ecommerce_orders';
+
+    protected function total(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->total_price,
+        );
+    }
+
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);

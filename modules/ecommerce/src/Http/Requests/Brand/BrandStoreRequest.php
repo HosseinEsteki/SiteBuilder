@@ -15,7 +15,7 @@ class BrandStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:ecommerce_brands,slug,' . $this->brand->id,
+            'slug' => 'required|string|max:255|unique:ecommerce_brands,slug',
             'description' => 'required|string|max:255',
             'logo' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ];
