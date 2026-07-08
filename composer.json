@@ -3,7 +3,10 @@
     "name": "laravel/blank-livewire-starter-kit",
     "type": "project",
     "description": "The official Laravel starter kit for Livewire.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -15,26 +18,52 @@
     "repositories": [
         {
             "type": "path",
-            "url": "modules/ecommerce"
+            "url": "modules/ecommerce",
+            "options": {
+                "symlink": true
+            }
         },
         {
             "type": "path",
-            "url": "modules/admin-panel"
-        },{
+            "url": "modules/admin-panel",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
             "type": "path",
-            "url": "modules/blog"
-        },{
+            "url": "modules/blog",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
             "type": "path",
-            "url": "modules/seo"
-        },{
+            "url": "modules/seo",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
             "type": "path",
-            "url": "modules/email"
-        },{
+            "url": "modules/email",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
             "type": "path",
-            "url": "modules/activity-log"
-        },{
+            "url": "modules/activity-log",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
             "type": "path",
-            "url": "modules/public"
+            "url": "modules/public",
+            "options": {
+                "symlink": true
+            }
         }
     ],
     "require": {

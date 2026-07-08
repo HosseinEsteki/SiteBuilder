@@ -1,69 +1,54 @@
-# Core Project (Laravel Modular Architecture)
+# SiteBuilder
 
-این پروژه هسته‌ی اصلی سیستم فروشگاه + بلاگ + صفحه‌ساز + سئو است.
-هدف این پروژه ایجاد یک ساختار ماژولار و مقیاس‌پذیر است که هر بخش به‌صورت پکیج مستقل توسعه داده شود.
+SiteBuilder is a modular Laravel site builder. The project is intended to provide a customized WordPress-like foundation with ecommerce, blog, SEO, email, activity logging, public shared content, and an admin panel.
 
----
+## Requirements
 
-## 📦 ویژگی‌ها
-- مدیریت کاربران (User Management)
-- احراز هویت (Auth) با Laravel Breeze
-- نقش‌ها و دسترسی‌ها با Spatie Permission
-- ساختار پوشه‌ی ماژول‌ها برای توسعه‌ی مستقل
-- آماده برای اتصال ماژول‌های فروشگاه، بلاگ، صفحه‌ساز، سئو و پنل ادمین
+- PHP 8.4 or a compatible PHP version supported by Laravel 12
+- Composer
+- Node.js and npm
+- SQLite for local development by default, or another database configured in `.env`
 
----
+## Setup
 
-## 🛠 نصب و راه‌اندازی
-
-### 1) کلون پروژه
 ```bash
-git clone <repo-url> core
-cd core
-```
-2) نصب وابستگی‌ها
-```bash
-   composer install
-   npm install && npm run dev
-```
-3) تنظیم محیط
-```bash
+composer install
 cp .env.example .env
 php artisan key:generate
+php artisan migrate --seed
+npm install
+npm run build
 ```
-4) اجرای مایگریشن‌ها
+
+Useful verification commands:
+
 ```bash
-php artisan migrate
-```
-
-📂 ساختار پوشه ها
-core/
-app/
-modules/
-ecommerce/
-blog/
-page-builder/
-seo/
-admin-panel/
-theme/
-routes/
-config/
-
-🔐 نقش‌ها و دسترسی‌ها
-برای مدیریت نقش‌ها از پکیج spatie/laravel-permission استفاده می‌شود.
-نقش‌های پایه:
-- admin → دسترسی کامل
-- editor → مدیریت محتوا
-- customer → کاربر فروشگاه
-
-🚀 توسعه ماژول‌ها
-هر ماژول به‌صورت پکیج مستقل در پوشه‌ی modules/ ساخته می‌شود و از طریق Composer به پروژه اصلی متصل می‌گردد.
-
-🧪 تست
-```bash
+composer dump-autoload
+php artisan package:discover
+php artisan about
+php artisan route:list
 php artisan test
 ```
 
+## Modules
 
-📜 لایسنس
-این پروژه تحت لایسنس MIT منتشر شده است.
+- `modules/admin-panel`: admin panel package shell and route loading.
+- `modules/activity-log`: automatic Eloquent activity logging and activity log API routes.
+- `modules/blog`: articles, categories, comments, tags, media, and blog API/web routes.
+- `modules/ecommerce`: products, categories, brands, carts, orders, discounts, coupons, payment stubs, media, and ecommerce routes.
+- `modules/email`: mail classes and test email route.
+- `modules/public`: shared post model, author helpers, enums, Persian date helpers, and shared migrations.
+- `modules/seo`: meta manager, schema helpers, redirects, sitemap command, and SEO facade.
+- `modules/theme`: experimental theme module shell.
+
+## Admin
+
+The Filament admin panel is available at:
+
+```text
+/admin
+```
+
+## Notes
+
+The modules are Composer path repositories. Local development expects those packages to be linked from `modules/*` so package code changes are reflected in the main application.

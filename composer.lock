@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17bcca75bcf75bb8cd0ef982e63b1b46",
+    "content-hash": "107234059cf2932e258633a0f8673e4d",
     "packages": [
         {
             "name": "a-sabagh/laravel-enhance-enums",
@@ -2901,7 +2901,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/activity-log",
-                "reference": "3f6742958eb0c0392697739286f6950eb949e266"
+                "reference": "6745a108c6dcda3bb985a354cc9f15cf33e50c53"
             },
             "require": {
                 "laravel/framework": "^12.0"
@@ -2924,6 +2924,7 @@
             },
             "description": "Laravel Activity Log Module for CRUD tracking and analytics",
             "transport-options": {
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2933,7 +2934,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/admin-panel",
-                "reference": "af44d5b65ea40f25687354c6f96ef2a2f94fe9b7"
+                "reference": "507ed312276765ac549b1c8719ac39fcc9e3e7a6"
             },
             "require": {
                 "filament/filament": "^5.1.3",
@@ -2958,6 +2959,7 @@
             ],
             "description": "Admin Panel module using Filament v5 to manage resources",
             "transport-options": {
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2967,7 +2969,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/blog",
-                "reference": "c21e994d17021951e5717ccd2d0c0d3471a17527"
+                "reference": "585e0d78971dedc2af15c238b0a172441a48069f"
             },
             "require": {
                 "spatie/laravel-medialibrary": "^11.17.10",
@@ -2989,6 +2991,7 @@
             },
             "description": "Blog module for articles, categories, tags, comments",
             "transport-options": {
+                "symlink": true,
                 "relative": true
             }
         },
@@ -2998,7 +3001,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/ecommerce",
-                "reference": "650da0d81842c627d181f767f16a55cb636ea7a8"
+                "reference": "ec830a1a809080088fb86c4d7e86caf311bc1b2f"
             },
             "require": {
                 "a-sabagh/laravel-iran-payment": "dev-main as 1.0",
@@ -3026,6 +3029,7 @@
             ],
             "description": "Ecommerce package for managing products, categories, brands, orders, carts, and payments.",
             "transport-options": {
+                "symlink": true,
                 "relative": true
             }
         },
@@ -3035,7 +3039,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/email",
-                "reference": "5eeee25d7c137f03f4463cdba3a91a70b4aec5ed"
+                "reference": "d480feec125b8fbee7d0e6329b508082620836b4"
             },
             "require": {
                 "spatie/laravel-sitemap": "^7.3.8"
@@ -3058,6 +3062,7 @@
             ],
             "description": "Laravel Email Module: Email manager for Website",
             "transport-options": {
+                "symlink": true,
                 "relative": true
             }
         },
@@ -3133,7 +3138,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/public",
-                "reference": "0b28e0c3d6e3002ba74dd4e5f48c61fb27971f63"
+                "reference": "a68c31e407c62609280bae575f87ac934669bd72"
             },
             "require": {
                 "spatie/laravel-medialibrary": "^11.17.10",
@@ -3155,6 +3160,7 @@
             },
             "description": "public",
             "transport-options": {
+                "symlink": true,
                 "relative": true
             }
         },
@@ -3164,7 +3170,7 @@
             "dist": {
                 "type": "path",
                 "url": "modules/seo",
-                "reference": "4b54fe83a6199923ad341fb7cfe8687c3a04fd9b"
+                "reference": "be9794925a058d6844f31b92c0c4cbf2b8709883"
             },
             "require": {
                 "artesaos/seotools": "^1.3.2",
@@ -3189,6 +3195,7 @@
             ],
             "description": "Laravel SEO Module: Meta Manager, Schema Generator, Sitemap, Redirect Manager",
             "transport-options": {
+                "symlink": true,
                 "relative": true
             }
         },
