@@ -23,8 +23,7 @@ class CheckoutRequest extends FormRequest
             'items.*.quantity'   => 'required|integer|min:1',
 
             // اطلاعات پرداخت
-            'payment.method' => 'required|string|in:zarinpal,stripe,paypal',
-            'payment.token'  => 'required|string|max:255',
+            'payment.method' => 'required|string|in:zarinpal,payping',
 
             // آدرس ارسال (اختیاری یا اجباری بسته به پروژه)
             'shipping.address' => 'required|string|max:500',

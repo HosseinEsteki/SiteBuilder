@@ -17,22 +17,27 @@ class PaymentController
         return response()->json([
             'order_id' => $order->id,
             'payment_ref' => $order->payment_ref,
+            'authority_key' => $paymentResult->authorityKey,
+            'redirect_url' => $paymentResult->redirectResponseUrl,
             'status' => $order->status,
-            'message' => $paymentResult ? 'Payment initiated' : 'Payment failed',
+            'message' => 'Payment initiated',
         ]);
     }
 
     public function verify(PaymentRequest $request, PaymentService $paymentService)
     {
         $order = Order::findOrFail($request->order_id);
-        $verified = $paymentService->verify($order, $request->token);
-
-        $order->update(['status' => $verified ? 'paid' : 'failed']);
+        $verification = $paymentService->verify(
+            $order,
+            $request->authority_key ?: $request->payment_code,
+            $request->payment_code,
+        );
 
         return response()->json([
             'order_id' => $order->id,
             'status' => $order->fresh()->status,
-            'message' => $verified ? 'Payment successful' : 'Payment failed',
+            'payment' => $verification->toArray(),
+            'message' => $verification->isSuccess() ? 'Payment successful' : 'Payment failed',
         ]);
     }
 }

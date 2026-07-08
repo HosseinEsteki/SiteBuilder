@@ -53,7 +53,6 @@ class CheckoutController
             'shipping_address' => $data['shipping']['address'],
             'shipping_code' => $data['shipping']['zip'],
             'shipping_user' => (string) $data['user_id'],
-            'payment_ref' => $data['payment']['token'],
         ]);
 
         foreach ($data['items'] as $item) {
@@ -66,12 +65,14 @@ class CheckoutController
             ]);
         }
 
-        $paymentResult = $paymentService->verify($order, $data['payment']['token']);
-        $order->update(['status' => $paymentResult ? 'paid' : 'failed']);
+        $payment = $paymentService->pay($order, $data['payment']['method']);
 
         return response()->json([
             'order' => $order->fresh()->load('items.product'),
-            'payment' => $paymentResult ? 'success' : 'failed',
+            'payment' => [
+                'authority_key' => $payment->authorityKey,
+                'redirect_url' => $payment->redirectResponseUrl,
+            ],
         ], 201);
     }
 }

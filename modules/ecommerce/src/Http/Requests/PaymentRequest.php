@@ -15,8 +15,9 @@ class PaymentRequest extends FormRequest
     {
         return [
             'order_id' => 'required|exists:ecommerce_orders,id',
-            'method' => 'required_without:token|string|in:zarinpal,stripe,paypal',
-            'token' => 'required_without:method|string|max:255',
+            'method' => 'required_without_all:authority_key,payment_code|string|in:zarinpal,payping',
+            'authority_key' => 'required_without_all:method,payment_code|string|max:100',
+            'payment_code' => 'required_without_all:method,authority_key|string|max:100',
         ];
     }
 }

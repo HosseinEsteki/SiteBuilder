@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use IRPayment\Models\Concerns\Paymentable;
 use Public\Helpers\AuthorHelper;
 use Public\Traits\HasPersianDate;
 
@@ -15,6 +16,7 @@ class Order extends Model
 {
     use HasFactory;
     use HasPersianDate;
+    use Paymentable;
     protected $fillable = [
         'user_id',
         'status',
