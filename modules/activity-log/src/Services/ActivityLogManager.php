@@ -37,4 +37,21 @@ class ActivityLogManager
             ->orderBy('created_at', 'desc')
             ->get();
     }
+
+    public function stats(): array
+    {
+        return [
+            'total' => ActivityLogModel::count(),
+            'by_action' => ActivityLogModel::query()
+                ->selectRaw('action, COUNT(*) as total')
+                ->groupBy('action')
+                ->pluck('total', 'action')
+                ->toArray(),
+            'by_model' => ActivityLogModel::query()
+                ->selectRaw('model, COUNT(*) as total')
+                ->groupBy('model')
+                ->pluck('total', 'model')
+                ->toArray(),
+        ];
+    }
 }

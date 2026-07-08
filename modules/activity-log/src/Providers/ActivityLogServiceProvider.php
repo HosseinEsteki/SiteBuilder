@@ -39,6 +39,7 @@ class ActivityLogServiceProvider extends ServiceProvider
 
         // بارگذاری migration ها
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         // بارگذاری کانفیگ ها
         $this->mergeConfigFrom(__DIR__.'/../config/activity-log.php', 'activity-log');

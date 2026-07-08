@@ -4,7 +4,6 @@ namespace Public\Helpers;
 
 use App\Models\User;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Schema\BlueprintState;
 
 class AuthorHelper
 {
@@ -12,12 +11,12 @@ class AuthorHelper
 
     public static function setTableFields(Blueprint $table)
     {
-        $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
+        $table->foreignId('author_id')->nullable()->constrained('users')->nullOnDelete();
     }
 
     public static function dropTableFields(Blueprint $table)
     {
-        $table->dropForeign($table->getTable().'_author_id_foreign');
+        $table->dropForeign([$table->getTable().'_author_id_foreign']);
         $table->dropColumn('author_id');
     }
     public static function authorRelation($model)

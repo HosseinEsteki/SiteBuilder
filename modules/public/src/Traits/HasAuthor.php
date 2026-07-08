@@ -2,7 +2,6 @@
 
 namespace Public\Traits;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Public\Helpers\AuthorHelper;
 
@@ -17,11 +16,19 @@ trait HasAuthor
 
 
         static::creating(function ($model) {
+            if (! Auth::check()) {
+                return;
+            }
+
                 $model->author_id = Auth::id();
         });
 
 
         static::updating(function ($model) {
+            if (! Auth::check()) {
+                return;
+            }
+
                 $model->author_id = Auth::id();
         });
     }
@@ -31,4 +38,3 @@ trait HasAuthor
         return AuthorHelper::authorRelation($this);
     }
 }
-
