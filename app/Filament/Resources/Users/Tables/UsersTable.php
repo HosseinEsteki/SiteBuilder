@@ -31,11 +31,11 @@ class UsersTable
                 TextColumn::make('email')
                     ->label(trans('Email'))
                     ->searchable(),
-                TextColumn::make('article-count')
+                TextColumn::make('article_count')
                     ->label(trans('blog::blog.articles.count'))
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('product-count')
+                TextColumn::make('product_count')
                     ->label(trans('ecommerce::ecommerce.products.count'))
                     ->numeric()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -48,7 +48,6 @@ class UsersTable
                     ->relationship('roles', 'name')
                     ->label(trans('permissions.role'))
                     ->preload(),
-                TimestampFilter::make(),
                 TimestampFilter::make(),
             ])
             ->recordActions([

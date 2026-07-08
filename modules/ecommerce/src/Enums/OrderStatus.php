@@ -34,7 +34,7 @@ enum OrderStatus: string
     public static function options()
     {
         return collect(static::cases())->mapWithKeys(function ($item) {
-            return [$item->name => $item->label()];
+            return [$item->value => $item->label()];
         })->toArray();
     }
     public function badgeColor(): string

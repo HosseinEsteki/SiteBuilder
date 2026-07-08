@@ -16,7 +16,7 @@ class AssignRoleBulkAction
             ->schema([
                 Select::make('role')
                     ->label(trans('permissions.role'))
-                    ->options(Role::pluck('name', 'id'))
+                    ->options(Role::pluck('name', 'name'))
                     ->required(),
             ])
             ->action(function (Collection $records, array $data) {

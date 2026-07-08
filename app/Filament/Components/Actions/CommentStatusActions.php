@@ -15,21 +15,21 @@ class CommentStatusActions
                 ->color('success')
                 ->requiresConfirmation()
                 ->hidden(fn($record) => $record->status === CommentStatus::Approved->value)
-                ->action(fn($record) => $record->update(['status' => CommentStatus::Approved->name])),
+                ->action(fn($record) => $record->update(['status' => CommentStatus::Approved->value])),
 
             Action::make('reject')
                 ->label(trans('public.comments.status.rejected'))
                 ->color('danger')
                 ->requiresConfirmation()
                 ->hidden(fn($record) => $record->status === CommentStatus::Rejected->value)
-                ->action(fn($record) => $record->update(['status' => CommentStatus::Rejected->name])),
+                ->action(fn($record) => $record->update(['status' => CommentStatus::Rejected->value])),
 
             Action::make('hide')
                 ->label(trans('public.comments.status.hidden'))
                 ->color('warning')
                 ->requiresConfirmation()
                 ->hidden(fn($record) => $record->status === CommentStatus::Hidden->value)
-                ->action(fn($record) => $record->update(['status' => CommentStatus::Hidden->name])),
+                ->action(fn($record) => $record->update(['status' => CommentStatus::Hidden->value])),
         ];
     }
 }

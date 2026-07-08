@@ -11,9 +11,8 @@ class UserRoleInput
         return Select::make('roles')
             ->label(trans('Role'))
             ->relationship('roles', 'name')
+            ->multiple()
             ->searchable()
-            ->preload()
-            ->default('کاربر عمومی');
+            ->preload();
     }
-
 }
