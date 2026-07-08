@@ -8,6 +8,7 @@ use Blog\Http\Requests\ArticleStoreRequest;
 use Blog\Http\Requests\ArticleUpdateRequest;
 use Blog\Models\Article;
 use Blog\Services\ArticleService;
+use Public\Enums\PostStatus;
 
 class ArticleController extends Controller
 {
@@ -42,9 +43,9 @@ class ArticleController extends Controller
             'content' => $data['content'],
             'category_id' => $data['category_id'] ?? null,
             'user_id' => auth()->id(),
-            'status' => 'draft',
-            'keywords' => $data['keywords'],
-            'description' => $data['description'],
+            'status' => $data['status'] ?? PostStatus::Draft->name,
+            'keywords' => $data['keywords'] ?? null,
+            'description' => $data['description'] ?? null,
         ]);
 
         return response()->json($article, 201);

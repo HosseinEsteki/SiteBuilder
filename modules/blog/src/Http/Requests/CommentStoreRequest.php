@@ -13,8 +13,9 @@ class CommentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'article_id' => 'required|exists:articles,id',
-            'content' => 'required|string|max:1000',
+            'article_id' => 'required|exists:blog_articles,id',
+            'subject' => 'required|string|max:255',
+            'comment' => 'required|string|max:1000',
         ];
     }
 }

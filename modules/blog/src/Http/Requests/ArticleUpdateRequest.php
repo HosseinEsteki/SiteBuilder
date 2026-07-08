@@ -2,6 +2,7 @@
 namespace Blog\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Public\Enums\PostStatus;
 
 class ArticleUpdateRequest extends FormRequest
 {
@@ -14,9 +15,9 @@ class ArticleUpdateRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string|max:255',
-            'content' => 'sometimes|string',
-            'category_id' => 'nullable|exists:categories,id',
-            'status' => 'in:draft,published',
+            'content' => 'sometimes',
+            'category_id' => 'nullable|exists:blog_categories,id',
+            'status' => 'nullable|in:' . implode(',', PostStatus::getNames()),
             'keywords' => 'nullable|json',
             'description' => 'nullable|string',
         ];

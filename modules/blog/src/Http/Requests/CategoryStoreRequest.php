@@ -14,7 +14,7 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'slug' => 'required|string|unique:categories,slug',
+            'slug' => 'required|string|unique:blog_categories,slug',
             'keywords' => 'nullable|json',
             'description' => 'nullable|string',
         ];
