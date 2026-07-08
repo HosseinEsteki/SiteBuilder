@@ -10,7 +10,7 @@ class ActivityLogController extends Controller
 {
     public function index(Request $request)
     {
-        $filters = $request->only(['user_id', 'model', 'action', 'date_from', 'date_to']);
+        $filters = $request->only(['user_id', 'model', 'model_id', 'action', 'ip_address', 'date_from', 'date_to', 'limit']);
         $logs = ActivityLog::all($filters);
 
         return ActivityLogResource::collection($logs);
@@ -19,7 +19,7 @@ class ActivityLogController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->get('q', '');
-        $filters = $request->only(['user_id', 'model', 'action']);
+        $filters = $request->only(['user_id', 'model', 'model_id', 'action', 'limit']);
         $logs = ActivityLog::search($keyword, $filters);
 
         return ActivityLogResource::collection($logs);

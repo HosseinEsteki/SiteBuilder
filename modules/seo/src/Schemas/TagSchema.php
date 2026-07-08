@@ -11,7 +11,7 @@ class TagSchema
         return Schema::collectionPage()
             ->name("Tag: {$tag->name}")
             ->description("Articles tagged with {$tag->name}")
-            ->url(route('tags.show', $tag))
+            ->url(url('/tags/'.$tag->slug))
             ->mainEntity(
                 Schema::itemList()
                     ->name("Articles for {$tag->name}")
@@ -19,7 +19,7 @@ class TagSchema
                         collect($articles)->map(function ($article, $index) {
                             return Schema::listItem()
                                 ->position($index + 1)
-                                ->url(route('articles.show', $article))
+                                ->url(url('/blog/articles/'.$article->slug))
                                 ->name($article->title);
                         })->toArray()
                     )

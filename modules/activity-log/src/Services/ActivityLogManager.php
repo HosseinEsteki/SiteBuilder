@@ -16,10 +16,13 @@ class ActivityLogManager
         return ActivityLogModel::query()
             ->when(isset($filters['user_id']), fn ($q) => $q->where('user_id', $filters['user_id']))
             ->when(isset($filters['model']), fn ($q) => $q->where('model', $filters['model']))
+            ->when(isset($filters['model_id']), fn ($q) => $q->where('model_id', $filters['model_id']))
             ->when(isset($filters['action']), fn ($q) => $q->where('action', $filters['action']))
+            ->when(isset($filters['ip_address']), fn ($q) => $q->where('ip_address', $filters['ip_address']))
             ->when(isset($filters['date_from']), fn ($q) => $q->whereDate('created_at', '>=', $filters['date_from']))
             ->when(isset($filters['date_to']), fn ($q) => $q->whereDate('created_at', '<=', $filters['date_to']))
             ->orderBy('created_at', 'desc')
+            ->limit((int) ($filters['limit'] ?? 100))
             ->get();
     }
 
@@ -34,7 +37,10 @@ class ActivityLogManager
             })
             ->when(isset($filters['user_id']), fn ($q) => $q->where('user_id', $filters['user_id']))
             ->when(isset($filters['model']), fn ($q) => $q->where('model', $filters['model']))
+            ->when(isset($filters['model_id']), fn ($q) => $q->where('model_id', $filters['model_id']))
+            ->when(isset($filters['action']), fn ($q) => $q->where('action', $filters['action']))
             ->orderBy('created_at', 'desc')
+            ->limit((int) ($filters['limit'] ?? 100))
             ->get();
     }
 
@@ -51,6 +57,11 @@ class ActivityLogManager
                 ->selectRaw('model, COUNT(*) as total')
                 ->groupBy('model')
                 ->pluck('total', 'model')
+                ->toArray(),
+            'latest' => ActivityLogModel::query()
+                ->latest()
+                ->limit(5)
+                ->get(['id', 'model', 'action', 'model_id', 'created_at'])
                 ->toArray(),
         ];
     }

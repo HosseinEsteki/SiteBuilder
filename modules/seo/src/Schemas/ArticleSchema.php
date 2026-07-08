@@ -9,13 +9,13 @@ class ArticleSchema
     public static function generate($article): string
     {
         return Schema::article()
-            ->headline($article->title)
+            ->headline($article->title ?? $article->name)
             ->description($article->excerpt ?? $article->description)
             ->author($article->author->name ?? 'Unknown')
-            ->datePublished($article->created_at->toIso8601String())
-            ->dateModified($article->updated_at->toIso8601String())
-            ->image($article->image_url ?? asset('default.jpg'))
-            ->url(route('articles.show', $article))
+            ->datePublished($article->created_at?->toIso8601String())
+            ->dateModified($article->updated_at?->toIso8601String())
+            ->image($article->logo_url ?: asset('default.jpg'))
+            ->url(url('/blog/articles/'.$article->slug))
             ->toScript();
     }
 }

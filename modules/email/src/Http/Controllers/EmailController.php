@@ -19,8 +19,8 @@ class EmailController extends Controller
             ], 404);
         }
 
-        Mail::to($order->user->email)->send(new OrderCreatedMail($order));
+        Mail::to($order->user->email)->queue(new OrderCreatedMail($order));
 
-        return response()->json(['message' => 'Test email sent.']);
+        return response()->json(['message' => 'Test email queued.']);
     }
 }

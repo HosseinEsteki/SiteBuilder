@@ -11,14 +11,14 @@ class ProductSchema
         return Schema::product()
             ->name($product->name)
             ->description($product->description)
-            ->image($product->image_url ?? asset('default-product.jpg'))
+            ->image($product->thumbnail_url ?: asset('default-product.jpg'))
             ->sku($product->sku ?? 'N/A')
             ->offers(
                 Schema::offer()
-                    ->price($product->price)
-                    ->priceCurrency('USD')
+                    ->price($product->sale_price ?? $product->price)
+                    ->priceCurrency(config('money.defaultCurrency', 'IRR'))
                     ->availability('https://schema.org/InStock')
-                    ->url(route('products.show', $product))
+                    ->url(url('/ecommerce/products/'.$product->slug))
             )
             ->toScript();
     }

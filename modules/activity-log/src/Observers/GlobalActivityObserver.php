@@ -44,10 +44,16 @@ class GlobalActivityObserver
             'model' => get_class($model),
             'action' => $action,
             'model_id' => $model->getKey(),
+            'ip_address' => request()?->ip(),
+            'user_agent' => request()?->userAgent(),
             'changes' => $action === 'update' ? [
                 'before' => $model->getOriginal(),
                 'after' => $model->getChanges(),
             ] : null,
+            'meta' => [
+                'url' => request()?->fullUrl(),
+                'method' => request()?->method(),
+            ],
         ]);
     }
 }

@@ -6,19 +6,27 @@ use Spatie\SchemaOrg\Schema;
 
 class CategorySchema
 {
-    public static function generate($category, $articles): string
+    public static function generate($category, $items): string
     {
+        $basePath = str_starts_with($category->getTable(), 'ecommerce_')
+            ? 'ecommerce/categories'
+            : 'blog/categories';
+
         $itemList = Schema::itemList()
             ->name($category->name)
             ->description($category->description ?? '')
-            ->url(route('categories.show', $category));
+            ->url(url("/{$basePath}/{$category->slug}"));
 
-        foreach ($articles as $index => $article) {
+        foreach ($items as $index => $item) {
+            $itemPath = str_starts_with($item->getTable(), 'ecommerce_')
+                ? 'ecommerce/products'
+                : 'blog/articles';
+
             $itemList->itemListElement(
                 Schema::listItem()
                     ->position($index + 1)
-                    ->url(route('articles.show', $article))
-                    ->name($article->title)
+                    ->url(url("/{$itemPath}/{$item->slug}"))
+                    ->name($item->title ?? $item->name)
             );
         }
 
