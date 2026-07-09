@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "107234059cf2932e258633a0f8673e4d",
+    "content-hash": "f02135ce40e3fdcae9c390cea6e9ed40",
     "packages": [
         {
             "name": "a-sabagh/laravel-enhance-enums",
@@ -3194,6 +3194,37 @@
                 "MIT"
             ],
             "description": "Laravel SEO Module: Meta Manager, Schema Generator, Sitemap, Redirect Manager",
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "hosseinesteki/theme",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "modules/theme",
+                "reference": "21baf37834750c940f7295fddf00d755f8ae506c"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Theme\\Providers\\ThemeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Theme\\": "src/",
+                    "Theme\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Theme module for the Laravel SiteBuilder project.",
             "transport-options": {
                 "symlink": true,
                 "relative": true

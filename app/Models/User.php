@@ -6,6 +6,8 @@ namespace App\Models;
 use Ecommerce\Models\Product;
 use Blog\Models\Article;
 use Ecommerce\Models\Order;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,7 +20,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements HasMedia, FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -71,6 +73,13 @@ class User extends Authenticatable implements HasMedia
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->hasAnyRole(['Super Admin', 'Editor', 'مدیرکل'])
+            || $this->getAllPermissions()->isNotEmpty();
+    }
+
     /*
    |--------------------------------------------------------------------------
    | Media Library

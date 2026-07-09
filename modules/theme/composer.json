@@ -1,0 +1,22 @@
+{
+    "name": "hosseinesteki/theme",
+    "description": "Theme module for the Laravel SiteBuilder project.",
+    "type": "library",
+    "version": "1.0.0",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Theme\\": "src/",
+            "Theme\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Theme\\Providers\\ThemeServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -39,7 +39,7 @@ php artisan test
 - `modules/email`: mail classes and test email route.
 - `modules/public`: shared post model, author helpers, enums, Persian date helpers, and shared migrations.
 - `modules/seo`: meta manager, schema helpers, redirects, sitemap command, and SEO facade.
-- `modules/theme`: experimental theme module shell.
+- `modules/theme`: Elementor-like theme/page builder MVP with themes, templates, pages, JSON builder blocks, public rendering, preview routes, Filament resources, permissions, and demo seed data.
 
 ## Admin
 
@@ -52,3 +52,5 @@ The Filament admin panel is available at:
 ## Notes
 
 The modules are Composer path repositories. Local development expects those packages to be linked from `modules/*` so package code changes are reflected in the main application.
+
+The Theme Builder MVP is available in Filament under the `Theme Builder` navigation group after running migrations and seeders. Published theme pages are served from `/pages/{slug}`; the seeded home page is available at `/pages/home`.

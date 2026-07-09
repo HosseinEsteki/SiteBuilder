@@ -8,14 +8,29 @@ use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        Role::create(['name' => 'مدیرکل'])->givePermissionTo(Permission::all());
-        Role::create(['name' => 'کاربر عمومی']);
+        $allPermissions = Permission::query()->pluck('name')->all();
 
+        Role::query()->firstOrCreate(['name' => 'Super Admin'])
+            ->syncPermissions($allPermissions);
 
+        Role::query()->firstOrCreate(['name' => 'Editor'])
+            ->syncPermissions([
+                'theme.pages.view',
+                'theme.pages.create',
+                'theme.pages.update',
+                'theme.pages.publish',
+                'theme.templates.view',
+            ]);
+
+        Role::query()->firstOrCreate(['name' => 'Customer'])
+            ->syncPermissions([]);
+
+        Role::query()->firstOrCreate(['name' => 'مدیرکل'])
+            ->syncPermissions($allPermissions);
+
+        Role::query()->firstOrCreate(['name' => 'کاربر عمومی'])
+            ->syncPermissions([]);
     }
 }

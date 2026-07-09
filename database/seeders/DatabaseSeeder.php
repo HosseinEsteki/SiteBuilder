@@ -10,6 +10,8 @@ use Ecommerce\Database\Seeders\EcommercePermissionSeeder;
 use Illuminate\Database\Seeder;
 use Ecommerce\Database\Seeders\EcommerceSeeder;
 use Illuminate\Support\Facades\Auth;
+use Theme\Database\Seeders\ThemePermissionSeeder;
+use Theme\Database\Seeders\ThemeSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,11 +26,13 @@ class DatabaseSeeder extends Seeder
             OrganizationSeeder::class,
             BlogSeeder::class,
             EcommerceSeeder::class,
+            ThemeSeeder::class,
         ]);
         /* در انتها ساخته بشه */
         $this->call([
             BlogPermissionSeeder::class,
             EcommercePermissionSeeder::class,
+            ThemePermissionSeeder::class,
             RoleSeeder::class
         ]);
 
