@@ -1,0 +1,2 @@
+@php($badges = collect($settings['badges'] ?? [])->filter(fn ($badge) => is_array($badge)))
+@if($badges->isNotEmpty())<section class="theme-trust" data-footer-block="trust_badges"><h3>{{ $settings['title'] }}</h3><div>@foreach($badges as $badge)@if(!empty($badge['image']))<a href="{{ $badge['url'] ?? '#' }}" rel="noopener"><img src="{{ $badge['image'] }}" alt="{{ $badge['title'] ?? '' }}" loading="lazy"></a>@endif @endforeach</div></section>@endif

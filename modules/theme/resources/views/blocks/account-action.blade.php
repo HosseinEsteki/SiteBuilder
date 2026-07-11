@@ -1,0 +1,1 @@
+<div class="theme-header-action theme-account">@auth<a href="{{ route('dashboard') }}">حساب کاربری</a>@else<a href="{{ route('login') }}">ورود</a><span>/</span><a href="{{ route('register') }}">ثبت‌نام</a>@endauth</div>

@@ -1,0 +1,2 @@
+@php($width = min(300, max(60, (int) ($settings['width'] ?? 160))))
+<a class="theme-site-logo" href="{{ route('theme.homepage') }}" aria-label="{{ config('app.name') }}" style="--logo-width:{{ $width }}px">@if(!empty($settings['desktop_logo']))<img class="theme-site-logo__desktop" src="{{ $settings['desktop_logo'] }}" alt="{{ config('app.name') }}">@else<span>{{ config('app.name') }}</span>@endif @if(!empty($settings['mobile_logo']))<img class="theme-site-logo__mobile" src="{{ $settings['mobile_logo'] }}" alt="{{ config('app.name') }}">@endif</a>

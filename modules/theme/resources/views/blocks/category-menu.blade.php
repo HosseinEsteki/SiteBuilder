@@ -1,0 +1,1 @@
+@if($categories->isNotEmpty())<nav class="theme-category-nav" aria-label="دسته‌بندی محصولات"><x-theme::container><ul>@foreach($categories as $category)<li><a href="{{ route('product-categories.show', $category) }}">{{ $category->name }}</a></li>@endforeach</ul></x-theme::container></nav>@endif

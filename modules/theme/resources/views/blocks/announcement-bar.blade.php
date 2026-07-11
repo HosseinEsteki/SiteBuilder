@@ -1,0 +1,1 @@
+@if($settings['enabled'] ?? true)<div class="theme-announcement" data-header-block="announcement_bar" style="--announcement-bg:{{ $settings['background_color'] }};--announcement-color:{{ $settings['text_color'] }}">@if(!empty($settings['url']))<a href="{{ $settings['url'] }}">{{ $settings['text'] }}</a>@else{{ $settings['text'] }}@endif</div>@endif

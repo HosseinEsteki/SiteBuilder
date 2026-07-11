@@ -1,0 +1,2 @@
+@php($links = collect($settings['links'] ?? [])->filter(fn ($item) => is_array($item) && !empty($item['platform'])))
+@if($links->isNotEmpty())<section class="theme-footer-social" data-footer-block="footer_social"><h3>{{ $settings['title'] }}</h3><div>@foreach($links as $link)<a href="{{ $link['url'] ?? '#' }}" rel="noopener noreferrer" aria-label="{{ $link['platform'] }}">{{ $link['platform'] }}</a>@endforeach</div></section>@endif

@@ -1,0 +1,2 @@
+@php($groups = collect($settings['groups'] ?? [])->filter(fn ($group) => is_array($group)))
+@if($groups->isNotEmpty())<section class="theme-footer-links" data-footer-block="footer_links">@foreach($groups as $group)<details open><summary>{{ $group['title'] ?? '' }}</summary><ul>@foreach($group['links'] ?? [] as $link)<li><a href="{{ $link['url'] ?? '#' }}">{{ $link['label'] ?? '' }}</a></li>@endforeach</ul></details>@endforeach</section>@endif
