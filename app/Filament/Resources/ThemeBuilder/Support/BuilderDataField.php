@@ -8,6 +8,7 @@ use Filament\Forms\Components\CodeEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 
 class BuilderDataField
 {
@@ -96,6 +97,39 @@ class BuilderDataField
                         CodeEditor::make('html')
                             ->helperText('Raw HTML is rendered as-is. Use only with trusted admin-authored content.'),
                     ]),
+                Block::make('product_breadcrumbs')->label('Product breadcrumbs')->schema([
+                    Toggle::make('show_category')->default(true),
+                ]),
+                Block::make('product_gallery')->label('Product gallery')->schema([
+                    Select::make('layout')->options(['vertical' => 'Vertical', 'horizontal' => 'Horizontal'])->default('vertical'),
+                    Toggle::make('show_thumbnails')->default(true),
+                ])->columns(2),
+                Block::make('product_summary')->label('Product summary')->schema([
+                    Toggle::make('show_brand')->default(true), Toggle::make('show_category')->default(true), Toggle::make('show_stock')->default(true),
+                ])->columns(3),
+                Block::make('product_price')->label('Product price')->schema([
+                    Toggle::make('show_price')->default(true),
+                ]),
+                Block::make('purchase_panel')->label('Purchase panel')->schema([
+                    TextInput::make('button_text')->default('افزودن به سبد خرید'), Toggle::make('show_stock')->default(true),
+                ])->columns(2),
+                Block::make('product_description')->label('Product description')->schema([
+                    TextInput::make('title')->default('توضیحات محصول'),
+                ]),
+                Block::make('product_specifications')->label('Product specifications')->schema([
+                    TextInput::make('title')->default('مشخصات محصول'), Toggle::make('show_empty')->default(false),
+                ])->columns(2),
+                Block::make('product_meta')->label('Product meta')->schema([
+                    TextInput::make('title')->default('اطلاعات محصول'),
+                ]),
+                Block::make('related_products')->label('Related products')->schema([
+                    TextInput::make('title')->default('محصولات مرتبط'),
+                    TextInput::make('limit')->numeric()->minValue(1)->maxValue(12)->default(4),
+                    Select::make('variant')->options(['default' => 'Default', 'compact' => 'Compact', 'horizontal' => 'Horizontal'])->default('default'),
+                ])->columns(3),
+                Block::make('service_features')->label('Service features')->schema([
+                    Toggle::make('enabled')->default(true)->helperText('Show or hide configured service features.'),
+                ]),
             ])
             ->collapsible()
             ->cloneable()

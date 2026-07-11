@@ -16,7 +16,7 @@ class ThemeRenderer
     ) {
     }
 
-    public function render(array|string|null $builderData): string
+    public function render(array|string|null $builderData, array $context = []): string
     {
         $blocks = $this->normalizeBuilderData($builderData);
 
@@ -25,11 +25,11 @@ class ThemeRenderer
         }
 
         return collect($blocks)
-            ->map(fn ($block): string => $this->renderBlock($block))
+            ->map(fn ($block): string => $this->renderBlock($block, $context))
             ->implode('');
     }
 
-    private function renderBlock(mixed $block): string
+    private function renderBlock(mixed $block, array $context = []): string
     {
         if (! is_array($block)) {
             return '';
@@ -58,7 +58,7 @@ class ThemeRenderer
         $children = is_array($block['children'] ?? null) ? $block['children'] : ($blockData['children'] ?? []);
         $children = is_array($children) ? $children : [];
         $childrenHtml = collect($children)
-            ->map(fn ($child): string => $this->renderBlock($child))
+            ->map(fn ($child): string => $this->renderBlock($child, $context))
             ->implode('');
 
         return $this->views->make($definition['view'], array_merge([
@@ -66,7 +66,7 @@ class ThemeRenderer
             'definition' => $definition,
             'settings' => $settings,
             'childrenHtml' => $childrenHtml,
-        ], $this->data->resolve($type, $settings)))->render();
+        ], $context, $this->data->resolve($type, $settings, $context)))->render();
     }
 
     private function normalizeBuilderData(array|string|null $builderData): array

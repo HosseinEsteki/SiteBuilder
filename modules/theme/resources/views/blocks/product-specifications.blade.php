@@ -1,0 +1,2 @@
+@php($options = $product->featureOptions->filter(fn ($option) => $option->feature && filled($option->value))->groupBy(fn ($option) => $option->feature->name))
+@if($options->isNotEmpty() || ($settings['show_empty'] ?? false))<section class="theme-product-specifications" data-theme-block="product_specifications"><h2>{{ $settings['title'] ?? 'مشخصات محصول' }}</h2>@forelse($options as $name => $values)<dl><dt>{{ $name }}</dt><dd>{{ $values->pluck('value')->join('، ') }}</dd></dl>@empty<p class="theme-empty">مشخصاتی ثبت نشده است.</p>@endforelse</section>@endif

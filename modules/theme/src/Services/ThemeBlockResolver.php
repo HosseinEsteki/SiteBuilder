@@ -19,7 +19,7 @@ class ThemeBlockResolver
     ) {
     }
 
-    public function resolve(string $type, array $settings = []): array
+    public function resolve(string $type, array $settings = [], array $context = []): array
     {
         return match ($type) {
             'product_carousel', 'featured_products', 'latest_products', 'discounted_products', 'category_product_section' => $this->products->provide($settings),
@@ -27,6 +27,7 @@ class ThemeBlockResolver
             'brand_carousel' => $this->brands->provide($settings),
             'posts', 'blog_posts' => $this->posts->provide($settings),
             'account_action', 'cart_action', 'mobile_header' => $this->header->provide($settings),
+            'related_products' => isset($context['product']) ? $this->products->related($context['product'], $settings) : ['products' => collect()],
             default => [],
         };
     }

@@ -6,9 +6,19 @@ use Ecommerce\Http\Requests\Product\ProductStoreRequest;
 use Ecommerce\Http\Requests\Product\ProductUpdateRequest;
 use Ecommerce\Models\Product;
 use Public\Enums\PostStatus;
+use Theme\Builder\ThemeRenderer;
+use Theme\Services\ActiveThemeResolver;
+use Theme\Services\TemplateResolver;
+use Theme\ThemeContext;
 
 class ProductController
 {
+    public function __construct(
+        private readonly ActiveThemeResolver $themes,
+        private readonly TemplateResolver $templates,
+        private readonly ThemeRenderer $renderer,
+    ) {
+    }
     /**
      * لیست همه محصولات
      */
@@ -23,15 +33,24 @@ class ProductController
     public function show(Product $product)
     {
         abort_unless($product->getRawOriginal('status') === PostStatus::Published->name, 404);
-        return response()->json([
-            'id'          => $product->id,
-            'name'        => $product->name,
-            'slug'        => $product->slug,
-            'description' => $product->description,
-            'price'       => $product->formatted_price,
-            'stock'       => $product->stock,
-            'category_id' => $product->category_id,
-            'brand_id'    => $product->brand_id,
+        $theme = $this->themes->resolve();
+        abort_if($theme === null, 404);
+
+        $template = $this->templates->resolve($theme, 'product');
+        abort_if($template === null, 404);
+
+        $product->loadMissing(['brand', 'category', 'featureOptions.feature', 'media', 'tags']);
+        $header = $this->templates->resolve($theme, 'header');
+        $footer = $this->templates->resolve($theme, 'footer');
+
+        return view('theme::templates.show', [
+            'template' => $template,
+            'themeContext' => new ThemeContext($theme, $header, $footer),
+            'renderedContent' => $this->renderer->render($template->builder_data, ['product' => $product]),
+            'renderedHeader' => $header ? $this->renderer->render($header->builder_data) : '',
+            'renderedFooter' => $footer ? $this->renderer->render($footer->builder_data) : '',
+            'metaTitle' => $product->name,
+            'metaDescription' => $product->short_information ?? $product->description,
         ]);
     }
 

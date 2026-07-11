@@ -1,0 +1,1 @@
+@if($product->content)<section class="theme-product-description" data-theme-block="product_description"><h2>{{ $settings['title'] ?? 'توضیحات محصول' }}</h2><div class="theme-prose">{!! $product->show_content !!}</div></section>@endif

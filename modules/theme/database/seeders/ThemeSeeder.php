@@ -41,8 +41,23 @@ class ThemeSeeder extends Seeder
         ];
 
         $this->template($theme, 'persian-commerce-homepage', 'Persian Commerce Homepage', 'homepage', $homeBlocks);
+        $this->template($theme, 'persian-commerce-product', 'Persian Commerce Product', 'product', [
+            ['type' => 'product_breadcrumbs', 'settings' => ['show_category' => true]],
+            ['type' => 'product_gallery', 'settings' => ['layout' => 'vertical', 'show_thumbnails' => true]],
+            ['type' => 'product_summary', 'settings' => ['show_brand' => true, 'show_category' => true, 'show_stock' => true]],
+            ['type' => 'product_price', 'settings' => ['show_price' => true]],
+            ['type' => 'purchase_panel', 'settings' => ['show_stock' => true, 'button_text' => 'افزودن به سبد خرید']],
+            ['type' => 'product_description', 'settings' => ['title' => 'توضیحات محصول']],
+            ['type' => 'product_specifications', 'settings' => ['title' => 'مشخصات محصول', 'show_empty' => false]],
+            ['type' => 'product_meta', 'settings' => ['title' => 'اطلاعات محصول']],
+            ['type' => 'related_products', 'settings' => ['title' => 'محصولات مرتبط', 'limit' => 4, 'variant' => 'default']],
+            ['type' => 'service_features', 'settings' => ['enabled' => true, 'features' => [
+                ['icon' => '✓', 'title' => 'ضمانت اصالت کالا', 'description' => 'خرید مطمئن از فروشگاه'],
+                ['icon' => '↺', 'title' => 'پشتیبانی خرید', 'description' => 'پاسخ‌گویی پیش و پس از خرید'],
+            ]]],
+        ]);
         foreach ([
-            'product' => 'Product', 'product_archive' => 'Product Archive',
+            'product_archive' => 'Product Archive',
             'product_category' => 'Product Category', 'blog_archive' => 'Blog Archive', 'article' => 'Article',
         ] as $type => $name) {
             $this->template($theme, 'persian-commerce-'.str_replace('_', '-', $type), $name, $type, []);

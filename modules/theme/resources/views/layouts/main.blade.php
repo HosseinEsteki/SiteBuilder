@@ -7,6 +7,7 @@
     @if (! empty($metaDescription))
         <meta name="description" content="{{ $metaDescription }}">
     @endif
+    @vite('modules/theme/resources/css/theme.css')
     @stack('styles')
 </head>
 <body>

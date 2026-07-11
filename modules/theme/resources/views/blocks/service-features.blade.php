@@ -1,2 +1,2 @@
-@php($features = collect($settings['features'] ?? [])->filter(fn ($feature) => is_array($feature)))
+@php($features = ($settings['enabled'] ?? true) ? collect($settings['features'] ?? [])->filter(fn ($feature) => is_array($feature)) : collect())
 @if($features->isNotEmpty())<section class="theme-services" data-footer-block="service_features"><x-theme::container><div class="theme-services__grid">@foreach($features as $feature)<div class="theme-service"><span class="theme-service__icon" aria-hidden="true">{{ $feature['icon'] ?? '✓' }}</span><div><strong>{{ $feature['title'] ?? '' }}</strong>@if(!empty($feature['description']))<small>{{ $feature['description'] }}</small>@endif</div></div>@endforeach</div></x-theme::container></section>@endif

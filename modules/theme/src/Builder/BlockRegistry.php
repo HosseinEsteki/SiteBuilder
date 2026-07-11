@@ -142,6 +142,16 @@ class BlockRegistry
             'category_menu' => ['type' => 'category_menu', 'label' => 'Category Menu', 'view' => 'theme::blocks.category-menu', 'settings' => ['limit' => 8]],
             'footer_brand' => ['type' => 'footer_brand', 'label' => 'Footer Brand', 'view' => 'theme::blocks.footer-brand', 'settings' => ['name' => '', 'description' => '', 'logo' => '']],
             'copyright' => ['type' => 'copyright', 'label' => 'Copyright', 'view' => 'theme::blocks.copyright', 'settings' => ['text' => 'SiteBuilder']],
+            'product_breadcrumbs' => ['type' => 'product_breadcrumbs', 'label' => 'Product Breadcrumbs', 'view' => 'theme::blocks.product-breadcrumbs', 'settings' => ['show_category' => true]],
+            'product_gallery' => ['type' => 'product_gallery', 'label' => 'Product Gallery', 'view' => 'theme::blocks.product-gallery', 'settings' => ['layout' => 'vertical', 'show_thumbnails' => true]],
+            'product_summary' => ['type' => 'product_summary', 'label' => 'Product Summary', 'view' => 'theme::blocks.product-summary', 'settings' => ['show_brand' => true, 'show_category' => true, 'show_stock' => true]],
+            'product_price' => ['type' => 'product_price', 'label' => 'Product Price', 'view' => 'theme::blocks.product-price', 'settings' => ['show_price' => true]],
+            'purchase_panel' => ['type' => 'purchase_panel', 'label' => 'Purchase Panel', 'view' => 'theme::blocks.purchase-panel', 'settings' => ['show_stock' => true, 'button_text' => 'افزودن به سبد خرید']],
+            'product_description' => ['type' => 'product_description', 'label' => 'Product Description', 'view' => 'theme::blocks.product-description', 'settings' => ['title' => 'توضیحات محصول']],
+            'product_specifications' => ['type' => 'product_specifications', 'label' => 'Product Specifications', 'view' => 'theme::blocks.product-specifications', 'settings' => ['title' => 'مشخصات محصول', 'show_empty' => false]],
+            'product_meta' => ['type' => 'product_meta', 'label' => 'Product Meta', 'view' => 'theme::blocks.product-meta', 'settings' => ['title' => 'اطلاعات محصول']],
+            'related_products' => ['type' => 'related_products', 'label' => 'Related Products', 'view' => 'theme::blocks.related-products', 'settings' => ['title' => 'محصولات مرتبط', 'limit' => 4, 'variant' => 'default']],
+            'service_features' => ['type' => 'service_features', 'label' => 'Service Features', 'view' => 'theme::blocks.service-features', 'settings' => ['enabled' => true, 'features' => []]],
         ];
     }
 
