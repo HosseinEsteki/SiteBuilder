@@ -2,6 +2,7 @@
 
 namespace Theme\Providers;
 
+use Theme\Services\ActiveThemeResolver;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +15,9 @@ class ThemeServiceProvider extends ServiceProvider
         if (is_file($configPath)) {
             $this->mergeConfigFrom($configPath, 'theme');
         }
+
+        $this->app->singleton(ActiveThemeResolver::class);
+        $this->app->alias(ActiveThemeResolver::class, 'theme.active');
     }
 
     public function boot(): void
