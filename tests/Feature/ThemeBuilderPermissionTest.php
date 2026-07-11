@@ -94,6 +94,6 @@ it('renders the seeded published home page', function () {
 
     $this->get('/pages/home')
         ->assertOk()
-        ->assertSee('Welcome to SiteBuilder')
-        ->assertSee('Open admin');
+        ->assertSee('خرید هوشمند')
+        ->assertSee('محصولات ویژه');
 });

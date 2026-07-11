@@ -5,12 +5,14 @@ namespace Theme\Builder;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Support\Arr;
 use JsonException;
+use Theme\Services\ThemeBlockResolver;
 
 class ThemeRenderer
 {
     public function __construct(
         private readonly BlockRegistry $blocks,
         private readonly ViewFactory $views,
+        private readonly ThemeBlockResolver $data,
     ) {
     }
 
@@ -59,12 +61,12 @@ class ThemeRenderer
             ->map(fn ($child): string => $this->renderBlock($child))
             ->implode('');
 
-        return $this->views->make($definition['view'], [
+        return $this->views->make($definition['view'], array_merge([
             'block' => $block,
             'definition' => $definition,
             'settings' => $settings,
             'childrenHtml' => $childrenHtml,
-        ])->render();
+        ], $this->data->resolve($type, $settings)))->render();
     }
 
     private function normalizeBuilderData(array|string|null $builderData): array

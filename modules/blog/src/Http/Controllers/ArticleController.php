@@ -28,9 +28,18 @@ class ArticleController extends Controller
     // نمایش جزئیات مقاله
     public function show($slug)
     {
-        return Article::where('slug', $slug)
+        $article = Article::where('slug', $slug)
+            ->where('status', PostStatus::Published->name)
             ->with('category', 'tags')
             ->firstOrFail();
+
+        return response()->json([
+            'id' => $article->id,
+            'name' => $article->name,
+            'slug' => $article->slug,
+            'status' => $article->status,
+            'category_id' => $article->category_id,
+        ]);
     }
 
     // ایجاد مقاله جدید

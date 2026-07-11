@@ -17,8 +17,9 @@ use Theme\Http\Controllers\ThemeTemplateController;
 Route::get('/pages/{slug}', [ThemePageController::class, 'show'])
     ->name('theme.pages.show');
 
-Route::get('/shop', [ThemeTemplateController::class, 'homepage'])
+Route::get('/', [ThemeTemplateController::class, 'homepage'])
     ->name('theme.homepage');
+Route::get('/shop', [ThemeTemplateController::class, 'homepage'])->name('theme.shop');
 
 Route::get('/theme/products/search', ProductSearchController::class)
     ->name('theme.product-search');

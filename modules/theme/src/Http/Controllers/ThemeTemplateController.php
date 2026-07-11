@@ -21,10 +21,13 @@ class ThemeTemplateController extends Controller
     public function homepage(): View
     {
         $theme = $this->themes->resolve();
-        abort_if($theme === null, 404);
+        if ($theme === null) {
+            return view('welcome');
+        }
 
         $template = $this->templates->resolve($theme, 'homepage');
-        abort_if($template === null, 404);
+        $page = $theme->pages()->published()->where('slug', 'home')->first();
+        abort_if($template === null && $page === null, 404);
 
         $header = $this->templates->resolve($theme, 'header');
         $footer = $this->templates->resolve($theme, 'footer');
@@ -33,10 +36,10 @@ class ThemeTemplateController extends Controller
         return view('theme::templates.show', [
             'template' => $template,
             'themeContext' => $context,
-            'renderedContent' => $this->renderer->render($template->builder_data),
+            'renderedContent' => $this->renderer->render($page?->builder_data ?? $template?->builder_data),
             'renderedHeader' => $header ? $this->renderer->render($header->builder_data) : '',
             'renderedFooter' => $footer ? $this->renderer->render($footer->builder_data) : '',
-            'metaTitle' => $template->name,
+            'metaTitle' => $page?->meta_title ?: ($page?->title ?? $template?->name),
             'metaDescription' => $theme->description,
         ]);
     }

@@ -3,6 +3,7 @@
 namespace Theme\DataProviders;
 
 use Blog\Models\Article;
+use Public\Enums\PostStatus;
 
 class BlogDataProvider
 {
@@ -10,6 +11,6 @@ class BlogDataProvider
     {
         $limit = min(12, max(1, (int) ($settings['limit'] ?? 4)));
 
-        return ['posts' => Article::query()->latest()->limit($limit)->get()];
+        return ['posts' => Article::query()->where('status', PostStatus::Published->name)->latest()->limit($limit)->get()];
     }
 }

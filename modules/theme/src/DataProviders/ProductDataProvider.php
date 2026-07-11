@@ -3,13 +3,14 @@
 namespace Theme\DataProviders;
 
 use Ecommerce\Models\Product;
+use Public\Enums\PostStatus;
 
 class ProductDataProvider
 {
     public function provide(array $settings = []): array
     {
         $limit = min(24, max(1, (int) ($settings['limit'] ?? 8)));
-        $query = Product::query()->with('brand');
+        $query = Product::query()->where('status', PostStatus::Published->name)->with('brand');
 
         if (! empty($settings['category_id'])) {
             $query->where('category_id', $settings['category_id']);

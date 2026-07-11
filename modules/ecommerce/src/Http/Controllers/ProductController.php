@@ -5,6 +5,7 @@ namespace Ecommerce\Http\Controllers;
 use Ecommerce\Http\Requests\Product\ProductStoreRequest;
 use Ecommerce\Http\Requests\Product\ProductUpdateRequest;
 use Ecommerce\Models\Product;
+use Public\Enums\PostStatus;
 
 class ProductController
 {
@@ -13,7 +14,7 @@ class ProductController
      */
     public function index()
     {
-        return response()->json(Product::select('id','name','slug','price','stock')->get());
+        return response()->json(Product::where('status', PostStatus::Published->name)->select('id','name','slug','price','stock')->get());
     }
 
     /**
@@ -21,6 +22,7 @@ class ProductController
      */
     public function show(Product $product)
     {
+        abort_unless($product->getRawOriginal('status') === PostStatus::Published->name, 404);
         return response()->json([
             'id'          => $product->id,
             'name'        => $product->name,

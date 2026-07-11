@@ -10,6 +10,8 @@
     @stack('styles')
 </head>
 <body>
+    @if (! empty($renderedHeader))<header data-theme-region="header">{!! $renderedHeader !!}</header>@endif
     @yield('content')
+    @if (! empty($renderedFooter))<footer data-theme-region="footer">{!! $renderedFooter !!}</footer>@endif
 </body>
 </html>

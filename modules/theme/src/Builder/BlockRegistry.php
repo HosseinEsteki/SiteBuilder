@@ -128,6 +128,20 @@ class BlockRegistry
                     'html' => 'nullable|string',
                 ],
             ],
+            'hero_slider' => ['type' => 'hero_slider', 'label' => 'Hero Slider', 'view' => 'theme::blocks.hero-slider', 'settings' => ['height' => 520, 'overlay' => 35, 'slides' => []]],
+            'promotion_banner_grid' => ['type' => 'promotion_banner_grid', 'label' => 'Promotion Banners', 'view' => 'theme::blocks.promotion-banner-grid', 'settings' => ['columns' => 2, 'banners' => []]],
+            'product_carousel' => ['type' => 'product_carousel', 'label' => 'Product Carousel', 'view' => 'theme::blocks.product-carousel', 'settings' => ['limit' => 8]],
+            'featured_products' => ['type' => 'featured_products', 'label' => 'Featured Products', 'view' => 'theme::blocks.product-carousel', 'settings' => ['limit' => 8]],
+            'discounted_products' => ['type' => 'discounted_products', 'label' => 'Discounted Products', 'view' => 'theme::blocks.product-carousel', 'settings' => ['limit' => 8]],
+            'category_product_section' => ['type' => 'category_product_section', 'label' => 'Category Products', 'view' => 'theme::blocks.product-carousel', 'settings' => ['limit' => 8]],
+            'category_grid' => ['type' => 'category_grid', 'label' => 'Category Grid', 'view' => 'theme::blocks.category-grid', 'settings' => ['limit' => 8, 'columns' => 4]],
+            'brand_carousel' => ['type' => 'brand_carousel', 'label' => 'Brand Carousel', 'view' => 'theme::blocks.brand-carousel', 'settings' => ['limit' => 12]],
+            'blog_posts' => ['type' => 'blog_posts', 'label' => 'Blog Posts', 'view' => 'theme::blocks.posts', 'settings' => ['limit' => 4]],
+            'announcement_bar' => ['type' => 'announcement_bar', 'label' => 'Announcement Bar', 'view' => 'theme::blocks.announcement-bar', 'settings' => ['enabled' => true, 'text' => '', 'url' => '', 'background_color' => '#111827', 'text_color' => '#ffffff']],
+            'site_logo' => ['type' => 'site_logo', 'label' => 'Site Logo', 'view' => 'theme::blocks.site-logo', 'settings' => ['desktop_logo' => '', 'mobile_logo' => '', 'width' => 160]],
+            'category_menu' => ['type' => 'category_menu', 'label' => 'Category Menu', 'view' => 'theme::blocks.category-menu', 'settings' => ['limit' => 8]],
+            'footer_brand' => ['type' => 'footer_brand', 'label' => 'Footer Brand', 'view' => 'theme::blocks.footer-brand', 'settings' => ['name' => '', 'description' => '', 'logo' => '']],
+            'copyright' => ['type' => 'copyright', 'label' => 'Copyright', 'view' => 'theme::blocks.copyright', 'settings' => ['text' => 'SiteBuilder']],
         ];
     }
 

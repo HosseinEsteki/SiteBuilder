@@ -40,7 +40,7 @@ class BlogSeeder extends Seeder
                 'category_id' => Category::query()->first()->id,
                 'description' => 'میدونستی لاراول چقدر خفنه؟',
                 'keywords' => ['asp.net', 'laravel', 'symfony'],
-                'status' => PostStatus::Draft->name,
+                'status' => PostStatus::Published->name,
                 'tags' => ['Laravel', 'Framework'],
             ],
             [
