@@ -152,6 +152,15 @@ class BlockRegistry
             'product_meta' => ['type' => 'product_meta', 'label' => 'Product Meta', 'view' => 'theme::blocks.product-meta', 'settings' => ['title' => 'اطلاعات محصول']],
             'related_products' => ['type' => 'related_products', 'label' => 'Related Products', 'view' => 'theme::blocks.related-products', 'settings' => ['title' => 'محصولات مرتبط', 'limit' => 4, 'variant' => 'default']],
             'service_features' => ['type' => 'service_features', 'label' => 'Service Features', 'view' => 'theme::blocks.service-features', 'settings' => ['enabled' => true, 'features' => []]],
+            'archive_breadcrumbs' => ['type' => 'archive_breadcrumbs', 'label' => 'Archive breadcrumbs', 'view' => 'theme::blocks.archive-breadcrumbs', 'settings' => []],
+            'archive_header' => ['type' => 'archive_header', 'label' => 'Archive header', 'view' => 'theme::blocks.archive-header', 'settings' => ['title' => 'فروشگاه', 'description' => '', 'show_description' => true, 'show_result_count' => true, 'banner_image' => '']],
+            'archive_category_navigation' => ['type' => 'archive_category_navigation', 'label' => 'Category navigation', 'view' => 'theme::blocks.archive-category-navigation', 'settings' => ['title' => 'دسته‌بندی‌ها', 'limit' => 12, 'columns' => 4, 'show_image' => true, 'show_count' => true]],
+            'product_filters' => ['type' => 'product_filters', 'label' => 'Product filters', 'view' => 'theme::blocks.product-filters', 'settings' => ['enabled' => true]],
+            'archive_toolbar' => ['type' => 'archive_toolbar', 'label' => 'Archive sorting', 'view' => 'theme::blocks.archive-toolbar', 'settings' => ['show_sorting' => true, 'show_result_count' => true]],
+            'active_filters' => ['type' => 'active_filters', 'label' => 'Active filters', 'view' => 'theme::blocks.active-filters', 'settings' => []],
+            'archive_product_grid' => ['type' => 'archive_product_grid', 'label' => 'Product grid', 'view' => 'theme::blocks.archive-product-grid', 'settings' => ['variant' => 'default', 'desktop_columns' => 4, 'tablet_columns' => 3, 'mobile_columns' => 2, 'show_image' => true, 'show_brand' => true, 'show_discount' => true, 'show_stock' => true, 'show_button' => false]],
+            'archive_pagination' => ['type' => 'archive_pagination', 'label' => 'Pagination', 'view' => 'theme::blocks.archive-pagination', 'settings' => ['enabled' => true]],
+            'archive_empty_state' => ['type' => 'archive_empty_state', 'label' => 'Empty state', 'view' => 'theme::blocks.archive-empty-state', 'settings' => ['title' => 'محصولی یافت نشد', 'description' => 'فیلترها را تغییر دهید یا دوباره تلاش کنید.', 'show_reset' => true]],
         ];
     }
 

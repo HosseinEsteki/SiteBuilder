@@ -28,6 +28,8 @@ class ThemeBlockResolver
             'posts', 'blog_posts' => $this->posts->provide($settings),
             'account_action', 'cart_action', 'mobile_header' => $this->header->provide($settings),
             'related_products' => isset($context['product']) ? $this->products->related($context['product'], $settings) : ['products' => collect()],
+            'archive_breadcrumbs', 'archive_header', 'archive_toolbar', 'product_filters', 'active_filters', 'archive_product_grid', 'archive_pagination', 'archive_empty_state' => $context,
+            'archive_category_navigation' => ['categories' => $context['categories'] ?? collect(), 'currentCategory' => $context['currentCategory'] ?? null],
             default => [],
         };
     }

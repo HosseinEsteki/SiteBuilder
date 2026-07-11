@@ -1,0 +1,1 @@
+@if(($settings['enabled'] ?? true) && $products->hasPages())<nav class="theme-pagination theme-container" aria-label="صفحه‌بندی محصولات" data-theme-block="archive_pagination">{{ $products->onEachSide(1)->links() }}</nav>@endif

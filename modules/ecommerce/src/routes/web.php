@@ -9,7 +9,7 @@ use Ecommerce\Http\Controllers\ProductController;
 Route::middleware(['web'])->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
-    Route::get('/product-categories/{category}', [CategoryController::class, 'show'])->name('product-categories.show');
+    Route::get('/product-categories/{category:slug}', [CategoryController::class, 'show'])->name('product-categories.show');
     Route::prefix('test')->group(function () {
 
         Route::get('brands', function (Request $request) {

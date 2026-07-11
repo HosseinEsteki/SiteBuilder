@@ -1,0 +1,2 @@
+@php($labels=['category'=>'دسته','brand'=>'برند','min_price'=>'حداقل قیمت','max_price'=>'حداکثر قیمت','availability'=>'موجود','discounted'=>'تخفیف‌دار'])
+@if(collect($activeFilters)->except('sort')->filter()->isNotEmpty())<div class="theme-filter-chips theme-container" data-theme-block="active_filters">@foreach(collect($activeFilters)->except('sort')->filter() as $key=>$value)<a href="{{ request()->fullUrlWithQuery([$key => null, 'page' => null]) }}" aria-label="حذف فیلتر {{ $labels[$key] ?? $key }}">{{ $labels[$key] ?? $key }} ×</a>@endforeach</div>@endif

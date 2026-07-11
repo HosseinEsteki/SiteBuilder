@@ -19,7 +19,7 @@ Route::get('/pages/{slug}', [ThemePageController::class, 'show'])
 
 Route::get('/', [ThemeTemplateController::class, 'homepage'])
     ->name('theme.homepage');
-Route::get('/shop', [ThemeTemplateController::class, 'homepage'])->name('theme.shop');
+Route::get('/shop', [ThemeTemplateController::class, 'shop'])->name('theme.shop');
 
 Route::get('/theme/products/search', ProductSearchController::class)
     ->name('theme.product-search');

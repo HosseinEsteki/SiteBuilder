@@ -5,20 +5,17 @@ namespace Ecommerce\Http\Controllers;
 use Ecommerce\Http\Requests\Category\CategoryStoreRequest;
 use Ecommerce\Http\Requests\Category\CategoryUpdateRequest;
 use Ecommerce\Models\Category;
+use Ecommerce\Services\ProductArchiveService;
+use Illuminate\Http\Request;
+use Theme\Http\Controllers\ThemeTemplateController;
 
 class CategoryController
 {
     // نمایش یک دسته‌بندی بر اساس slug
-    public function show(Category $category)
+    public function show(Request $request, Category $category, ProductArchiveService $archive, ThemeTemplateController $themes)
     {
-        return response()->json([
-            'id' => $category->id,
-            'name' => $category->name,
-            'slug' => $category->slug,
-            'logo'=>$category->logo,
-            'description' => $category->description,
-            'products' => $category->products()->select('id', 'name', 'slug', 'price')->get(),
-        ]);
+        abort_unless($category->is_published, 404);
+        return $themes->archiveView('product_category', $archive->build($request, $category));
     }
 
     // لیست همه دسته‌بندی‌ها

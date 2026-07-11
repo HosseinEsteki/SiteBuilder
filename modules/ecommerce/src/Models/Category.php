@@ -26,9 +26,17 @@ class Category extends Model implements HasMedia
         'name',
         'slug',
         'description',
+        'is_published',
     ];
 
     protected $table = 'ecommerce_categories';
+
+    protected $casts = ['is_published' => 'boolean'];
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', true);
+    }
 
     public function products(): HasMany
     {

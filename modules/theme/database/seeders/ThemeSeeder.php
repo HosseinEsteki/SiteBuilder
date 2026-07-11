@@ -56,12 +56,17 @@ class ThemeSeeder extends Seeder
                 ['icon' => '↺', 'title' => 'پشتیبانی خرید', 'description' => 'پاسخ‌گویی پیش و پس از خرید'],
             ]]],
         ]);
-        foreach ([
-            'product_archive' => 'Product Archive',
-            'product_category' => 'Product Category', 'blog_archive' => 'Blog Archive', 'article' => 'Article',
-        ] as $type => $name) {
-            $this->template($theme, 'persian-commerce-'.str_replace('_', '-', $type), $name, $type, []);
-        }
+        $archiveBlocks = [
+            ['type' => 'archive_breadcrumbs', 'settings' => []], ['type' => 'archive_header', 'settings' => ['title' => 'فروشگاه', 'show_description' => true, 'show_result_count' => true]],
+            ['type' => 'archive_category_navigation', 'settings' => ['title' => 'دسته‌بندی محصولات', 'limit' => 12, 'columns' => 4]],
+            ['type' => 'product_filters', 'settings' => ['enabled' => true]], ['type' => 'archive_toolbar', 'settings' => ['show_sorting' => true, 'show_result_count' => true]],
+            ['type' => 'active_filters', 'settings' => []], ['type' => 'archive_product_grid', 'settings' => ['variant' => 'default', 'desktop_columns' => 4, 'tablet_columns' => 3, 'mobile_columns' => 2, 'show_button' => false]],
+            ['type' => 'archive_empty_state', 'settings' => ['title' => 'محصولی یافت نشد', 'show_reset' => true]], ['type' => 'archive_pagination', 'settings' => ['enabled' => true]],
+            ['type' => 'service_features', 'settings' => ['enabled' => false, 'features' => []]],
+        ];
+        $this->template($theme, 'persian-commerce-product-archive', 'Product Archive', 'product_archive', $archiveBlocks);
+        $this->template($theme, 'persian-commerce-product-category', 'Product Category', 'product_category', $archiveBlocks);
+        foreach (['blog_archive' => 'Blog Archive', 'article' => 'Article'] as $type => $name) $this->template($theme, 'persian-commerce-'.str_replace('_', '-', $type), $name, $type, []);
 
         ThemePage::query()->updateOrCreate(['slug' => 'home'], [
             'theme_id' => $theme->id, 'template_id' => $header->id, 'title' => 'خانه',

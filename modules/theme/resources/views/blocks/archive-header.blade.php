@@ -1,0 +1,3 @@
+@php($title = $currentCategory?->name ?: ($settings['title'] ?? 'فروشگاه'))
+@php($description = $currentCategory?->description ?: ($settings['description'] ?? ''))
+<header class="theme-archive-header" data-theme-block="archive_header"><x-theme::container>@if($settings['banner_image'] ?? null)<img src="{{ $settings['banner_image'] }}" alt="{{ $title }}" loading="lazy">@endif<h1>{{ $title }}</h1>@if(($settings['show_description'] ?? true) && $description)<p>{{ $description }}</p>@endif @if($settings['show_result_count'] ?? true)<small>{{ number_format($resultCount) }} محصول</small>@endif</x-theme::container></header>

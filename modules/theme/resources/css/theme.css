@@ -3,6 +3,7 @@
 @import './footer.css';
 @import './homepage.css';
 @import './product-detail.css';
+@import './product-archive.css';
 
 /* Persian Commerce homepage polish */
 html,body{overflow-x:clip}html{line-height:1.75}.theme-container{width:min(100% - clamp(2rem,5vw,4rem),var(--theme-container-width))}.theme-section{padding-block:clamp(2.25rem,5vw,4.5rem)}.theme-section-title{margin-block-end:clamp(1.25rem,3vw,2rem);text-align:start}.theme-header-action{white-space:nowrap}.theme-hero-slide__content{padding-block:clamp(2rem,6vw,5rem);text-shadow:0 2px 16px rgb(15 23 42/.35)}.theme-product-card__title{display:-webkit-box;min-height:3.4em;overflow:hidden;line-height:1.7;-webkit-box-orient:vertical;-webkit-line-clamp:2}.theme-card:focus-within{border-color:color-mix(in srgb,var(--theme-primary) 55%,#dbe2ea);box-shadow:0 0 0 3px color-mix(in srgb,var(--theme-primary) 16%,transparent),var(--theme-card-shadow)}a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid color-mix(in srgb,var(--theme-primary) 35%,transparent);outline-offset:3px}footer{gap:clamp(1rem,3vw,2rem);line-height:1.85}@media(max-width:639px){.theme-container{width:min(100% - 1.5rem,var(--theme-container-width))}.theme-product-grid{gap:var(--theme-space-3)}.theme-hero-slide,.theme-hero-slide__content{height:min(var(--hero-height),360px)}body{padding-block-end:calc(68px + env(safe-area-inset-bottom))}}@media(prefers-reduced-motion:reduce){.theme-product-card{transition:none}}

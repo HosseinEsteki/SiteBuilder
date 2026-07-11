@@ -8,6 +8,8 @@ use Theme\Builder\ThemeRenderer;
 use Theme\Services\ActiveThemeResolver;
 use Theme\Services\TemplateResolver;
 use Theme\ThemeContext;
+use Ecommerce\Services\ProductArchiveService;
+use Illuminate\Http\Request;
 
 class ThemeTemplateController extends Controller
 {
@@ -41,6 +43,29 @@ class ThemeTemplateController extends Controller
             'renderedFooter' => $footer ? $this->renderer->render($footer->builder_data) : '',
             'metaTitle' => $page?->meta_title ?: ($page?->title ?? $template?->name),
             'metaDescription' => $theme->description,
+        ]);
+    }
+
+    public function shop(Request $request, ProductArchiveService $archive): View
+    {
+        return $this->archiveView('product_archive', $archive->build($request));
+    }
+
+    public function archiveView(string $type, array $data): View
+    {
+        $theme = $this->themes->resolve();
+        abort_if($theme === null, 404);
+        $template = $this->templates->resolve($theme, $type);
+        abort_if($template === null, 404);
+        $header = $this->templates->resolve($theme, 'header');
+        $footer = $this->templates->resolve($theme, 'footer');
+        return view('theme::templates.show', [
+            'template' => $template, 'themeContext' => new ThemeContext($theme, $header, $footer),
+            'renderedContent' => $this->renderer->render($template->builder_data, $data),
+            'renderedHeader' => $header ? $this->renderer->render($header->builder_data) : '',
+            'renderedFooter' => $footer ? $this->renderer->render($footer->builder_data) : '',
+            'metaTitle' => $data['currentCategory']?->name ?? 'فروشگاه',
+            'metaDescription' => $data['currentCategory']?->description ?? 'محصولات فروشگاه',
         ]);
     }
 }
