@@ -30,24 +30,17 @@ class ArticleController extends Controller
 
     public function themeIndex()
     {
-        $articles = Article::query()
-            ->where('status', PostStatus::Published->name)
-            ->with(['category', 'tags'])
-            ->latest()
-            ->paginate(12);
-
-        return $this->themeView('blog_archive', ['articles' => $articles, 'posts' => $articles]);
+        return $this->themeView('blog_archive', $this->service->archive((int) request('per_page', 12)));
     }
 
     public function themeShow(string $slug)
     {
-        $article = Article::query()
-            ->where('slug', $slug)
-            ->where('status', PostStatus::Published->name)
-            ->with(['category', 'tags', 'media'])
-            ->firstOrFail();
+        $article = $this->service->published($slug);
 
-        return $this->themeView('article', ['article' => $article], $article->name, $article->description);
+        return $this->themeView('article', [
+            'article' => $article,
+            'relatedArticles' => $this->service->related($article),
+        ], $article->name, $article->description);
     }
 
     private function themeView(string $type, array $data, ?string $title = null, ?string $description = null)

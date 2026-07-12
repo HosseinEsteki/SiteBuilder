@@ -156,6 +156,26 @@ class BuilderDataField
                     TextInput::make('empty_title'), Textarea::make('empty_description'), TextInput::make('not_found_title'),
                     Textarea::make('not_found_description'), Toggle::make('show_shop_action')->default(true),
                 ])->columns(2),
+                Block::make('blog_archive_grid')->label('Blog archive grid')->schema([
+                    TextInput::make('heading')->default('مجله'), Textarea::make('description'),
+                    Toggle::make('show_excerpt')->default(true), Toggle::make('show_category')->default(true),
+                    Toggle::make('show_date')->default(true), Toggle::make('show_image')->default(true),
+                    TextInput::make('columns')->numeric()->minValue(1)->maxValue(4)->default(3),
+                    Select::make('image_ratio')->options(['16/9' => '16:9', '4/3' => '4:3', '1/1' => '1:1'])->default('16/9'),
+                    TextInput::make('articles_per_page')->numeric()->minValue(1)->maxValue(24)->default(12),
+                ])->columns(3),
+                Block::make('article_header')->label('Article header')->schema([
+                    Toggle::make('show_category')->default(true), Toggle::make('show_date')->default(true),
+                    Toggle::make('show_author')->default(true), Toggle::make('show_image')->default(true),
+                ])->columns(4),
+                Block::make('article_content')->label('Article content')->schema([]),
+                Block::make('related_articles')->label('Related articles')->schema([
+                    TextInput::make('heading')->default('مقاله‌های مرتبط'), TextInput::make('limit')->numeric()->minValue(1)->maxValue(8)->default(3),
+                    TextInput::make('columns')->numeric()->minValue(1)->maxValue(4)->default(3),
+                    Select::make('image_ratio')->options(['16/9' => '16:9', '4/3' => '4:3', '1/1' => '1:1'])->default('16/9'),
+                    Toggle::make('show_excerpt')->default(false), Toggle::make('show_category')->default(true),
+                    Toggle::make('show_date')->default(true), Toggle::make('show_image')->default(true),
+                ])->columns(4),
             ])
             ->collapsible()
             ->cloneable()

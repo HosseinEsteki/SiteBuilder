@@ -79,7 +79,14 @@ class ThemeSeeder extends Seeder
             ['type' => 'archive_pagination', 'settings' => ['enabled' => true]],
             ['type' => 'service_features', 'settings' => ['enabled' => false, 'features' => []]],
         ]);
-        foreach (['blog_archive' => 'Blog Archive', 'article' => 'Article'] as $type => $name) $this->template($theme, 'persian-commerce-'.str_replace('_', '-', $type), $name, $type, []);
+        $this->template($theme, 'persian-commerce-blog-archive', 'Blog Archive', 'blog_archive', [
+            ['type' => 'blog_archive_grid', 'settings' => ['heading' => 'مجله', 'columns' => 3, 'image_ratio' => '16/9', 'articles_per_page' => 12]],
+        ]);
+        $this->template($theme, 'persian-commerce-article', 'Article', 'article', [
+            ['type' => 'article_header', 'settings' => []],
+            ['type' => 'article_content', 'settings' => []],
+            ['type' => 'related_articles', 'settings' => ['limit' => 3]],
+        ]);
 
         $foreignPage = ThemePage::query()->where('slug', 'home')->where('theme_id', '!=', $theme->id)->exists();
         throw_if($foreignPage, LogicException::class, 'The home page slug is already assigned to another theme.');
