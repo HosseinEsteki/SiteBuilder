@@ -130,6 +130,32 @@ class BuilderDataField
                 Block::make('service_features')->label('Service features')->schema([
                     Toggle::make('enabled')->default(true)->helperText('Show or hide configured service features.'),
                 ]),
+                Block::make('search_breadcrumbs')->label('Search breadcrumbs')->schema([]),
+                Block::make('search_header')->label('Search header')->schema([
+                    TextInput::make('title')->default('نتایج جستجو'), Textarea::make('description'),
+                    Toggle::make('show_header')->default(true), Toggle::make('show_result_count')->default(true),
+                ])->columns(2),
+                Block::make('search_form')->label('Search form')->schema([
+                    Toggle::make('enabled')->default(true), TextInput::make('label')->default('جستجوی محصولات'), TextInput::make('placeholder'),
+                ])->columns(3),
+                Block::make('product_filters')->label('Product filters')->schema([Toggle::make('enabled')->default(true)]),
+                Block::make('archive_toolbar')->label('Search sorting')->schema([
+                    Toggle::make('show_sorting')->default(true), Toggle::make('show_result_count')->default(true),
+                ])->columns(2),
+                Block::make('active_filters')->label('Active filters')->schema([]),
+                Block::make('archive_product_grid')->label('Search product grid')->schema([
+                    Select::make('variant')->options(['default' => 'Default', 'compact' => 'Compact', 'horizontal' => 'Horizontal'])->default('default'),
+                    TextInput::make('desktop_columns')->numeric()->minValue(1)->maxValue(6)->default(4),
+                    TextInput::make('tablet_columns')->numeric()->minValue(1)->maxValue(4)->default(3),
+                    TextInput::make('mobile_columns')->numeric()->minValue(1)->maxValue(2)->default(2),
+                    Toggle::make('show_image')->default(true), Toggle::make('show_brand')->default(true),
+                    Toggle::make('show_discount')->default(true), Toggle::make('show_stock')->default(true), Toggle::make('show_button')->default(false),
+                ])->columns(3),
+                Block::make('archive_pagination')->label('Pagination')->schema([Toggle::make('enabled')->default(true)]),
+                Block::make('search_empty_state')->label('Search empty state')->schema([
+                    TextInput::make('empty_title'), Textarea::make('empty_description'), TextInput::make('not_found_title'),
+                    Textarea::make('not_found_description'), Toggle::make('show_shop_action')->default(true),
+                ])->columns(2),
             ])
             ->collapsible()
             ->cloneable()

@@ -161,6 +161,10 @@ class BlockRegistry
             'archive_product_grid' => ['type' => 'archive_product_grid', 'label' => 'Product grid', 'view' => 'theme::blocks.archive-product-grid', 'settings' => ['variant' => 'default', 'desktop_columns' => 4, 'tablet_columns' => 3, 'mobile_columns' => 2, 'show_image' => true, 'show_brand' => true, 'show_discount' => true, 'show_stock' => true, 'show_button' => false]],
             'archive_pagination' => ['type' => 'archive_pagination', 'label' => 'Pagination', 'view' => 'theme::blocks.archive-pagination', 'settings' => ['enabled' => true]],
             'archive_empty_state' => ['type' => 'archive_empty_state', 'label' => 'Empty state', 'view' => 'theme::blocks.archive-empty-state', 'settings' => ['title' => 'محصولی یافت نشد', 'description' => 'فیلترها را تغییر دهید یا دوباره تلاش کنید.', 'show_reset' => true]],
+            'search_breadcrumbs' => ['type' => 'search_breadcrumbs', 'label' => 'Search breadcrumbs', 'view' => 'theme::blocks.search-breadcrumbs', 'settings' => []],
+            'search_header' => ['type' => 'search_header', 'label' => 'Search header', 'view' => 'theme::blocks.search-header', 'settings' => ['title' => 'نتایج جستجو', 'description' => '', 'show_header' => true, 'show_result_count' => true]],
+            'search_form' => ['type' => 'search_form', 'label' => 'Search form', 'view' => 'theme::blocks.search-form', 'settings' => ['enabled' => true, 'label' => 'جستجوی محصولات', 'placeholder' => 'نام محصول را وارد کنید']],
+            'search_empty_state' => ['type' => 'search_empty_state', 'label' => 'Search empty state', 'view' => 'theme::blocks.search-empty-state', 'settings' => ['empty_title' => 'چه محصولی می‌خواهید؟', 'empty_description' => 'نام یا مشخصات محصول را در کادر جستجو وارد کنید.', 'not_found_title' => 'محصولی یافت نشد', 'not_found_description' => 'عبارت دیگری را امتحان کنید یا فیلترها را پاک کنید.', 'show_shop_action' => true]],
         ];
     }
 

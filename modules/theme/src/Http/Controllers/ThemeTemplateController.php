@@ -64,8 +64,8 @@ class ThemeTemplateController extends Controller
             'renderedContent' => $this->renderer->render($template->builder_data, $data),
             'renderedHeader' => $header ? $this->renderer->render($header->builder_data) : '',
             'renderedFooter' => $footer ? $this->renderer->render($footer->builder_data) : '',
-            'metaTitle' => $data['currentCategory']?->name ?? 'فروشگاه',
-            'metaDescription' => $data['currentCategory']?->description ?? 'محصولات فروشگاه',
+            'metaTitle' => isset($data['searchQuery']) ? 'نتایج جستجو' : ($data['currentCategory']?->name ?? 'فروشگاه'),
+            'metaDescription' => isset($data['searchQuery']) ? 'جستجوی محصولات فروشگاه' : ($data['currentCategory']?->description ?? 'محصولات فروشگاه'),
         ]);
     }
 }

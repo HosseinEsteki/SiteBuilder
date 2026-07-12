@@ -1,0 +1,1 @@
+<nav class="theme-archive-breadcrumbs theme-container" aria-label="مسیر صفحه" data-theme-block="search_breadcrumbs"><a href="{{ route('theme.homepage') }}">خانه</a><span aria-hidden="true">/</span><span aria-current="page">نتایج جستجو</span></nav>

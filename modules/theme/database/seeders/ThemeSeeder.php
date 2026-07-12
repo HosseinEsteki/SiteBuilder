@@ -66,6 +66,18 @@ class ThemeSeeder extends Seeder
         ];
         $this->template($theme, 'persian-commerce-product-archive', 'Product Archive', 'product_archive', $archiveBlocks);
         $this->template($theme, 'persian-commerce-product-category', 'Product Category', 'product_category', $archiveBlocks);
+        $this->template($theme, 'persian-commerce-search-results', 'Persian Commerce Search Results', 'search_results', [
+            ['type' => 'search_breadcrumbs', 'settings' => []],
+            ['type' => 'search_header', 'settings' => ['title' => 'نتایج جستجو', 'show_header' => true, 'show_result_count' => true]],
+            ['type' => 'search_form', 'settings' => ['enabled' => true]],
+            ['type' => 'product_filters', 'settings' => ['enabled' => true]],
+            ['type' => 'archive_toolbar', 'settings' => ['show_sorting' => true, 'show_result_count' => true]],
+            ['type' => 'active_filters', 'settings' => []],
+            ['type' => 'archive_product_grid', 'settings' => ['variant' => 'default', 'desktop_columns' => 4, 'tablet_columns' => 3, 'mobile_columns' => 2]],
+            ['type' => 'search_empty_state', 'settings' => ['show_shop_action' => true]],
+            ['type' => 'archive_pagination', 'settings' => ['enabled' => true]],
+            ['type' => 'service_features', 'settings' => ['enabled' => false, 'features' => []]],
+        ]);
         foreach (['blog_archive' => 'Blog Archive', 'article' => 'Article'] as $type => $name) $this->template($theme, 'persian-commerce-'.str_replace('_', '-', $type), $name, $type, []);
 
         ThemePage::query()->updateOrCreate(['slug' => 'home'], [
