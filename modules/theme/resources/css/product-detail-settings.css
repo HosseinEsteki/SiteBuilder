@@ -1,0 +1,14 @@
+.theme-product-gallery__primary {
+    position: relative;
+    aspect-ratio: var(--product-image-ratio, 1/1);
+}
+
+.theme-product-gallery__primary img {
+    object-fit: var(--product-image-fit, contain);
+}
+
+.theme-product-gallery__badge {
+    position: absolute;
+    inset-block-start: 1rem;
+    inset-inline-start: 1rem;
+}

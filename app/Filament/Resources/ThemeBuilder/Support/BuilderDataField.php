@@ -101,11 +101,13 @@ class BuilderDataField
                     Toggle::make('show_category')->default(true),
                 ]),
                 Block::make('product_gallery')->label('Product gallery')->schema([
-                    Select::make('layout')->options(['vertical' => 'Vertical', 'horizontal' => 'Horizontal'])->default('vertical'),
-                    Toggle::make('show_thumbnails')->default(true),
-                ])->columns(2),
+                    Select::make('image_ratio')->options(['1/1' => 'Square', '4/3' => 'Landscape', '3/4' => 'Portrait'])->default('1/1'),
+                    Select::make('image_fit')->options(['contain' => 'Contain', 'cover' => 'Cover'])->default('contain'),
+                    Toggle::make('show_thumbnails')->default(true), Toggle::make('show_discount_badge')->default(true),
+                ])->columns(4),
                 Block::make('product_summary')->label('Product summary')->schema([
-                    Toggle::make('show_brand')->default(true), Toggle::make('show_category')->default(true), Toggle::make('show_stock')->default(true),
+                    Toggle::make('show_brand')->default(true), Toggle::make('show_category')->default(true), Toggle::make('show_sku')->default(true),
+                    Toggle::make('show_short_description')->default(true), Toggle::make('show_stock')->default(true),
                 ])->columns(3),
                 Block::make('product_price')->label('Product price')->schema([
                     Toggle::make('show_price')->default(true),
@@ -130,6 +132,22 @@ class BuilderDataField
                 Block::make('service_features')->label('Service features')->schema([
                     Toggle::make('enabled')->default(true)->helperText('Show or hide configured service features.'),
                 ]),
+                Block::make('product_archive_header')->label('Product archive header')->schema([
+                    Toggle::make('show_description')->default(true), Toggle::make('show_image')->default(true),
+                    Toggle::make('show_result_count')->default(true), Toggle::make('show_breadcrumbs')->default(true),
+                    Select::make('alignment')->options(['right' => 'Right', 'center' => 'Center', 'left' => 'Left'])->default('right'),
+                    Select::make('variant')->options(['default' => 'Default', 'compact' => 'Compact'])->default('default'),
+                ])->columns(3),
+                Block::make('product_listing_grid')->label('Product listing grid')->schema([
+                    Select::make('variant')->options(['default' => 'Default', 'compact' => 'Compact', 'horizontal' => 'Horizontal'])->default('default'),
+                    TextInput::make('desktop_columns')->numeric()->minValue(1)->maxValue(6)->default(4),
+                    TextInput::make('tablet_columns')->numeric()->minValue(1)->maxValue(4)->default(3),
+                    TextInput::make('mobile_columns')->numeric()->minValue(1)->maxValue(2)->default(2),
+                    Toggle::make('show_brand')->default(true), Toggle::make('show_discount')->default(true),
+                    Toggle::make('show_stock')->default(true), Toggle::make('show_button')->default(false),
+                    Toggle::make('show_result_count')->default(false), TextInput::make('empty_title')->default('محصولی یافت نشد'),
+                    Textarea::make('empty_description'),
+                ])->columns(3),
                 Block::make('search_breadcrumbs')->label('Search breadcrumbs')->schema([]),
                 Block::make('search_header')->label('Search header')->schema([
                     TextInput::make('title')->default('نتایج جستجو'), Textarea::make('description'),

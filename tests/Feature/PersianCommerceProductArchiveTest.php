@@ -4,15 +4,24 @@ use Ecommerce\Models\Category;
 use Ecommerce\Models\Product;
 use Public\Enums\PostStatus;
 use Theme\Models\Theme;
+use Theme\Builder\BlockRegistry;
 use Theme\Services\TemplateResolver;
 
 beforeEach(fn () => $this->seed());
+
+test('reusable product discovery blocks are registered with views', function () {
+    foreach (['product_archive_header', 'product_listing_grid'] as $type) {
+        $definition = app(BlockRegistry::class)->get($type);
+        expect($definition)->not->toBeNull()->and(view()->exists($definition['view']))->toBeTrue();
+    }
+});
 
 test('persian commerce archive templates are seeded and resolve as defaults', function () {
     $theme = Theme::where('slug', 'persian-commerce')->firstOrFail();
     foreach (['product_archive', 'product_category'] as $type) {
         $template = app(TemplateResolver::class)->resolve($theme, $type);
-        expect($template)->not->toBeNull()->and($template->theme_id)->toBe($theme->id)->and($template->is_default)->toBeTrue();
+        expect($template)->not->toBeNull()->and($template->theme_id)->toBe($theme->id)->and($template->is_default)->toBeTrue()
+            ->and(collect($template->builder_data)->pluck('type'))->toContain('product_archive_header', 'product_listing_grid');
     }
 });
 
@@ -39,4 +48,14 @@ test('archive excludes drafts and preserves filter query pagination', function (
 test('empty published category renders safely', function () {
     $category = Category::create(['name' => 'دسته خالی', 'slug' => 'empty-category', 'description' => null, 'is_published' => true]);
     $this->get(route('product-categories.show', $category))->assertOk()->assertSee('محصولی یافت نشد');
+});
+
+test('category excludes unrelated products and listing renders pagination', function () {
+    $category = Category::published()->firstOrFail();
+    $other = Category::published()->whereKeyNot($category->getKey())->firstOrFail();
+    Product::factory()->count(13)->create(['category_id' => $category->id, 'status' => PostStatus::Published->name, 'brand_id' => null]);
+    Product::factory()->create(['category_id' => $other->id, 'status' => PostStatus::Published->name, 'brand_id' => null, 'name' => 'UNRELATED-PRODUCT']);
+
+    $this->get(route('product-categories.show', $category))->assertOk()
+        ->assertDontSee('UNRELATED-PRODUCT')->assertSee('aria-label="صفحه‌بندی محصولات"', false);
 });

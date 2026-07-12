@@ -3,11 +3,23 @@
 use Ecommerce\Models\Product;
 use Ecommerce\Models\Category;
 use Public\Enums\PostStatus;
+use Theme\Builder\BlockRegistry;
 use Theme\Database\Seeders\ThemeSeeder;
 use Theme\Models\Theme;
 use Theme\Services\TemplateResolver;
 
 beforeEach(fn () => app(ThemeSeeder::class)->run());
+
+it('registers every supported product presentation block with an existing view', function () {
+    $registry = app(BlockRegistry::class);
+
+    foreach (['product_gallery', 'product_summary', 'product_description', 'product_specifications', 'related_products'] as $type) {
+        $definition = $registry->get($type);
+
+        expect($definition)->not->toBeNull()
+            ->and(view()->exists($definition['view']))->toBeTrue();
+    }
+});
 
 function detailProduct(array $attributes = []): Product
 {
@@ -36,7 +48,13 @@ it('seeds the published default product template idempotently', function () {
     expect($template)->not->toBeNull()
         ->and($template->theme_id)->toBe($theme->id)
         ->and($template->is_default)->toBeTrue()
-        ->and(collect($template->builder_data)->pluck('type'))->toContain('product_gallery', 'related_products');
+        ->and(collect($template->builder_data)->pluck('type'))->toContain(
+            'product_gallery',
+            'product_summary',
+            'product_description',
+            'product_specifications',
+            'related_products',
+        );
 
     $count = $theme->templates()->where('type', 'product')->count();
     app(ThemeSeeder::class)->run();

@@ -15,7 +15,7 @@ test('search route and seeded theme template render through theme chrome', funct
 
     expect($template)->not->toBeNull()->and($template->theme_id)->toBe($theme->id)->and($template->is_default)->toBeTrue();
     $this->get(route('theme.product-search'))->assertOk()->assertSee('data-theme-template="search_results"', false)
-        ->assertSee('<header', false)->assertSee('<footer', false)->assertSee('چه محصولی می‌خواهید؟');
+        ->assertSee('<header', false)->assertSee('<footer', false)->assertSee('محصولی یافت نشد');
 });
 
 test('search shows published match through shared card and excludes draft', function () {

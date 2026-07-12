@@ -5,6 +5,7 @@ namespace Ecommerce\Http\Controllers;
 use Ecommerce\Http\Requests\Product\ProductStoreRequest;
 use Ecommerce\Http\Requests\Product\ProductUpdateRequest;
 use Ecommerce\Models\Product;
+use Ecommerce\Services\ProductDetailService;
 use Public\Enums\PostStatus;
 use Theme\Builder\ThemeRenderer;
 use Theme\Services\ActiveThemeResolver;
@@ -17,6 +18,7 @@ class ProductController
         private readonly ActiveThemeResolver $themes,
         private readonly TemplateResolver $templates,
         private readonly ThemeRenderer $renderer,
+        private readonly ProductDetailService $productDetails,
     ) {
     }
     /**
@@ -32,21 +34,20 @@ class ProductController
      */
     public function show(Product $product)
     {
-        abort_unless($product->getRawOriginal('status') === PostStatus::Published->name, 404);
+        $presentation = $this->productDetails->resolve($product);
         $theme = $this->themes->resolve();
         abort_if($theme === null, 404);
 
         $template = $this->templates->resolve($theme, 'product');
         abort_if($template === null, 404);
 
-        $product->loadMissing(['brand', 'category', 'featureOptions.feature', 'media', 'tags']);
         $header = $this->templates->resolve($theme, 'header');
         $footer = $this->templates->resolve($theme, 'footer');
 
         return view('theme::templates.show', [
             'template' => $template,
             'themeContext' => new ThemeContext($theme, $header, $footer),
-            'renderedContent' => $this->renderer->render($template->builder_data, ['product' => $product]),
+            'renderedContent' => $this->renderer->render($template->builder_data, $presentation),
             'renderedHeader' => $header ? $this->renderer->render($header->builder_data) : '',
             'renderedFooter' => $footer ? $this->renderer->render($footer->builder_data) : '',
             'metaTitle' => $product->name,

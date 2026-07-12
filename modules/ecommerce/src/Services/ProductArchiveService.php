@@ -24,6 +24,7 @@ class ProductArchiveService
 
     private function buildQuery(Request $request, ?Category $category = null, ?string $search = null): array
     {
+        $category?->loadMissing('media');
         $filters = $request->validate([
             'q' => 'nullable|string|max:255',
             'category' => 'nullable|string|max:255', 'brand' => 'nullable|string|max:255',
@@ -62,6 +63,9 @@ class ProductArchiveService
         };
         $products = $query->paginate(12)->withQueryString();
         return ['products' => $products, 'currentCategory' => $category, 'searchQuery' => $search,
+            'archiveTitle' => $search !== null ? 'نتایج جستجو' : ($category?->name ?? 'فروشگاه'),
+            'archiveDescription' => $category?->description,
+            'archiveImage' => $category?->logo_url ?: null,
             'categories' => Category::published()->withCount(['products' => fn ($q) => $q->where('status', PostStatus::Published->name)])->orderBy('name')->limit(24)->get(),
             'brands' => Brand::published()->orderBy('name')->limit(50)->get(), 'sortingOptions' => self::SORTS,
             'activeFilters' => $filters, 'resultCount' => $products->total(),

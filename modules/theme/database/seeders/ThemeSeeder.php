@@ -58,25 +58,21 @@ class ThemeSeeder extends Seeder
             ]]],
         ]);
         $archiveBlocks = [
-            ['type' => 'archive_breadcrumbs', 'settings' => []], ['type' => 'archive_header', 'settings' => ['title' => 'فروشگاه', 'show_description' => true, 'show_result_count' => true]],
+            ['type' => 'product_archive_header', 'settings' => ['show_description' => true, 'show_image' => true, 'show_result_count' => true, 'show_breadcrumbs' => true]],
             ['type' => 'archive_category_navigation', 'settings' => ['title' => 'دسته‌بندی محصولات', 'limit' => 12, 'columns' => 4]],
             ['type' => 'product_filters', 'settings' => ['enabled' => true]], ['type' => 'archive_toolbar', 'settings' => ['show_sorting' => true, 'show_result_count' => true]],
-            ['type' => 'active_filters', 'settings' => []], ['type' => 'archive_product_grid', 'settings' => ['variant' => 'default', 'desktop_columns' => 4, 'tablet_columns' => 3, 'mobile_columns' => 2, 'show_button' => false]],
-            ['type' => 'archive_empty_state', 'settings' => ['title' => 'محصولی یافت نشد', 'show_reset' => true]], ['type' => 'archive_pagination', 'settings' => ['enabled' => true]],
+            ['type' => 'active_filters', 'settings' => []], ['type' => 'product_listing_grid', 'settings' => ['variant' => 'default', 'desktop_columns' => 4, 'tablet_columns' => 3, 'mobile_columns' => 2, 'show_button' => false, 'empty_title' => 'محصولی یافت نشد']],
             ['type' => 'service_features', 'settings' => ['enabled' => false, 'features' => []]],
         ];
         $this->template($theme, 'persian-commerce-product-archive', 'Product Archive', 'product_archive', $archiveBlocks);
         $this->template($theme, 'persian-commerce-product-category', 'Product Category', 'product_category', $archiveBlocks);
         $this->template($theme, 'persian-commerce-search-results', 'Persian Commerce Search Results', 'search_results', [
-            ['type' => 'search_breadcrumbs', 'settings' => []],
-            ['type' => 'search_header', 'settings' => ['title' => 'نتایج جستجو', 'show_header' => true, 'show_result_count' => true]],
+            ['type' => 'product_archive_header', 'settings' => ['show_description' => false, 'show_image' => false, 'show_result_count' => true, 'show_breadcrumbs' => true, 'variant' => 'compact']],
             ['type' => 'search_form', 'settings' => ['enabled' => true]],
             ['type' => 'product_filters', 'settings' => ['enabled' => true]],
             ['type' => 'archive_toolbar', 'settings' => ['show_sorting' => true, 'show_result_count' => true]],
             ['type' => 'active_filters', 'settings' => []],
-            ['type' => 'archive_product_grid', 'settings' => ['variant' => 'default', 'desktop_columns' => 4, 'tablet_columns' => 3, 'mobile_columns' => 2]],
-            ['type' => 'search_empty_state', 'settings' => ['show_shop_action' => true]],
-            ['type' => 'archive_pagination', 'settings' => ['enabled' => true]],
+            ['type' => 'product_listing_grid', 'settings' => ['variant' => 'default', 'desktop_columns' => 4, 'tablet_columns' => 3, 'mobile_columns' => 2, 'empty_title' => 'محصولی یافت نشد', 'empty_description' => 'عبارت دیگری را امتحان کنید.']],
             ['type' => 'service_features', 'settings' => ['enabled' => false, 'features' => []]],
         ]);
         $this->template($theme, 'persian-commerce-blog-archive', 'Blog Archive', 'blog_archive', [
