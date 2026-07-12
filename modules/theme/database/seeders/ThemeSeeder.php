@@ -3,6 +3,7 @@
 namespace Theme\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use LogicException;
 use Theme\Models\Theme;
 use Theme\Models\ThemePage;
 use Theme\Models\ThemeTemplate;
@@ -20,7 +21,7 @@ class ThemeSeeder extends Seeder
             'settings' => ['direction' => 'rtl', 'primary_color' => '#ef4444', 'content_width' => '1280px'],
         ]);
 
-        $header = $this->template($theme, 'persian-commerce-header', 'Persian Commerce Header', 'header', [
+        $this->template($theme, 'persian-commerce-header', 'Persian Commerce Header', 'header', [
             ['type' => 'announcement_bar', 'settings' => ['text' => 'ارسال رایگان برای سفارش‌های منتخب']],
             ['type' => 'site_logo', 'settings' => []],
             ['type' => 'category_menu', 'settings' => []],
@@ -40,7 +41,7 @@ class ThemeSeeder extends Seeder
             ['type' => 'blog_posts', 'settings' => ['title' => 'تازه‌های وبلاگ', 'limit' => 4]],
         ];
 
-        $this->template($theme, 'persian-commerce-homepage', 'Persian Commerce Homepage', 'homepage', $homeBlocks);
+        $homepage = $this->template($theme, 'persian-commerce-homepage', 'Persian Commerce Homepage', 'homepage', $homeBlocks);
         $this->template($theme, 'persian-commerce-product', 'Persian Commerce Product', 'product', [
             ['type' => 'product_breadcrumbs', 'settings' => ['show_category' => true]],
             ['type' => 'product_gallery', 'settings' => ['layout' => 'vertical', 'show_thumbnails' => true]],
@@ -80,8 +81,11 @@ class ThemeSeeder extends Seeder
         ]);
         foreach (['blog_archive' => 'Blog Archive', 'article' => 'Article'] as $type => $name) $this->template($theme, 'persian-commerce-'.str_replace('_', '-', $type), $name, $type, []);
 
-        ThemePage::query()->updateOrCreate(['slug' => 'home'], [
-            'theme_id' => $theme->id, 'template_id' => $header->id, 'title' => 'خانه',
+        $foreignPage = ThemePage::query()->where('slug', 'home')->where('theme_id', '!=', $theme->id)->exists();
+        throw_if($foreignPage, LogicException::class, 'The home page slug is already assigned to another theme.');
+
+        ThemePage::query()->updateOrCreate(['theme_id' => $theme->id, 'slug' => 'home'], [
+            'template_id' => $homepage->id, 'title' => 'خانه',
             'excerpt' => 'صفحه اصلی فروشگاه فارسی', 'builder_data' => $homeBlocks,
             'meta_title' => 'فروشگاه فارسی', 'meta_description' => 'صفحه اصلی فروشگاه فارسی',
             'status' => 'published', 'published_at' => now(),
@@ -90,8 +94,17 @@ class ThemeSeeder extends Seeder
 
     private function template(Theme $theme, string $slug, string $name, string $type, array $blocks): ThemeTemplate
     {
-        return ThemeTemplate::query()->updateOrCreate(['slug' => $slug], [
-            'theme_id' => $theme->id, 'name' => $name, 'type' => $type,
+        $foreignTemplate = ThemeTemplate::query()->where('slug', $slug)->where('theme_id', '!=', $theme->id)->exists();
+        throw_if($foreignTemplate, LogicException::class, "Template [{$slug}] is already assigned to another theme.");
+
+        ThemeTemplate::query()
+            ->where('theme_id', $theme->id)
+            ->where('type', $type)
+            ->where('slug', '!=', $slug)
+            ->update(['is_default' => false]);
+
+        return ThemeTemplate::query()->updateOrCreate(['theme_id' => $theme->id, 'slug' => $slug], [
+            'name' => $name, 'type' => $type,
             'builder_data' => $blocks, 'status' => 'published', 'is_default' => true,
         ]);
     }

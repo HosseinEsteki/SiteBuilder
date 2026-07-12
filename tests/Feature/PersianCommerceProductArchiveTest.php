@@ -1,6 +1,7 @@
 <?php
 
 use Ecommerce\Models\Category;
+use Ecommerce\Models\Product;
 use Public\Enums\PostStatus;
 use Theme\Models\Theme;
 use Theme\Services\TemplateResolver;
@@ -17,6 +18,7 @@ test('persian commerce archive templates are seeded and resolve as defaults', fu
 
 test('shop and published category render shared product cards inside theme chrome', function () {
     $category = Category::published()->firstOrFail();
+    Product::factory()->create(['category_id' => $category->id, 'status' => PostStatus::Published->name]);
     $this->get(route('theme.shop'))->assertOk()->assertSee('data-product-card', false)->assertSee('<header', false)->assertSee('<footer', false);
     $this->get(route('product-categories.show', $category))->assertOk()->assertSee($category->name);
 });
@@ -29,8 +31,7 @@ test('unpublished category is hidden', function () {
 
 test('archive excludes drafts and preserves filter query pagination', function () {
     $category = Category::published()->firstOrFail();
-    $draft = $category->products()->firstOrFail();
-    $draft->update(['status' => PostStatus::Draft->name, 'name' => 'DRAFT-HIDDEN-PRODUCT']);
+    $draft = Product::factory()->create(['category_id' => $category->id, 'status' => PostStatus::Draft->name, 'name' => 'DRAFT-HIDDEN-PRODUCT']);
     $this->get(route('theme.shop', ['category' => $category->slug, 'sort' => 'price_asc']))
         ->assertOk()->assertDontSee('DRAFT-HIDDEN-PRODUCT')->assertSee('name="sort"', false);
 });

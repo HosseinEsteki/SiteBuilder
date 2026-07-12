@@ -21,6 +21,16 @@ it('seeds a complete same-theme Persian Commerce runtime idempotently', function
         ->and(ThemeTemplate::query()->whereIn('type', $types)->where('theme_id', '!=', $theme->id)->exists())->toBeFalse()
         ->and(ThemePage::query()->published()->where('theme_id', $theme->id)->where('slug', 'home')->exists())->toBeTrue();
 
+    $homepage = ThemePage::query()->where('theme_id', $theme->id)->where('slug', 'home')->sole();
+    expect($homepage->template)->not->toBeNull()
+        ->and($homepage->template->theme_id)->toBe($theme->id)
+        ->and($homepage->template->type)->toBe('homepage')
+        ->and($homepage->template->status)->toBe('published');
+
+    foreach ($types as $type) {
+        expect($theme->templates()->where('type', $type)->where('is_default', true)->count())->toBe(1);
+    }
+
     $counts = [$theme->templates()->count(), $theme->pages()->count()];
     app(ThemeSeeder::class)->run();
     expect([$theme->templates()->count(), $theme->pages()->count()])->toBe($counts);
@@ -48,6 +58,11 @@ it('resolves category and published article routes without exposing drafts', fun
     $draft = Article::query()->create(['name' => 'Draft article', 'slug' => 'draft-article', 'category_id' => $blogCategory->id, 'content' => [], 'status' => PostStatus::Draft->name]);
 
     $this->get(route('product-categories.show', $category))->assertOk();
-    $this->get(route('articles.show', $published->slug))->assertOk();
+    $this->get(route('articles.index'))->assertOk()
+        ->assertSee('data-theme-template="blog_archive"', false);
+    $this->get(route('articles.show', $published->slug))->assertOk()
+        ->assertSee('data-theme-template="article"', false)
+        ->assertSee('data-theme-region="header"', false)
+        ->assertSee('data-theme-region="footer"', false);
     $this->get(route('articles.show', $draft->slug))->assertNotFound();
 });

@@ -1,75 +1,92 @@
-# Persian Commerce Runtime Integration Recovery
+# Persian Commerce Theme Runtime Integration Recovery
 
-## Root causes
+Date: 2026-07-12
 
-- `ThemeSeeder` still installed the generic starter theme and did not create the recovered homepage/template selections.
-- `BlockRegistry` knew only the base builder blocks.
-- `ThemeRenderer` did not merge `ThemeBlockResolver` provider data into dynamic block views.
-- Recovered blog identifiers used `blog_posts` while the resolver/view still assumed `posts`.
-- The public category/article route names referenced by recovered views were absent.
-- The root route still rendered Laravel's welcome view and the recovered layout did not output selected header/footer HTML.
-- Fresh Blog seed data contained no published article.
+## Result
 
-## Seed records restored
+The recovered Persian Commerce Theme now survives a fresh migration and seed and resolves its public homepage, product archive/detail/category pages, blog archive, and article detail pages through the active Theme presentation flow. Dynamic homepage data renders safely when datasets are empty.
 
-- One idempotent active theme: `persian-commerce`.
-- Published default templates: `header`, `footer`, `homepage`, `product`, `product_archive`, `product_category`, `blog_archive`, and `article`.
-- One published `home` ThemePage containing recovered homepage builder data.
-- Every template/page selection uses the Persian Commerce theme; IDs are resolved from created models.
-- One existing sample Blog article is now published so a fresh seed has a resolvable article page.
+## Root causes and repairs
 
-## Registered blocks
+- The seed structure did not consistently connect the published `home` page to the published `homepage` template. `ThemeSeeder` now uses idempotent same-theme lookups, rejects a template or home-page slug owned by another theme, maintains one selected default per seeded type, and assigns the homepage template to the home page without fixed IDs.
+- Recovered dynamic block views and providers were present while the surviving registry only exposed legacy content blocks. The registry now exposes the implemented Persian Commerce homepage, header, footer, product, archive, and search block contracts used by seeded builder data; `ThemeBlockResolver` supplies dynamic data and safe empty collections.
+- The Ecommerce and Blog web route files now expose `product-categories.show` and `articles.show`. Product categories reuse the Ecommerce archive service and Theme controller. Blog web routes use dedicated Theme-rendered controller methods, while the existing JSON actions remain available to API routes.
+- Seed-dependent archive/search tests assumed random seed data relationships and one search assertion confused the reflected query with a leaked draft result. The tests now create explicit valid products and assert the rendered result-card contract.
 
-Homepage/dynamic: `hero_slider`, `promotion_banner_grid`, `product_carousel`, `featured_products`, `discounted_products`, `category_product_section`, `category_grid`, `brand_carousel`, `blog_posts`.
+## Seeded Persian Commerce structure
 
-Seeded layout support: `announcement_bar`, `site_logo`, `category_menu`, `footer_brand`, `copyright`.
+Fresh seeding creates exactly one active `persian-commerce` theme and published defaults for:
 
-Dynamic rendering now merges the existing product/category/brand/blog providers into Blade data. Product and article providers select published records and retain bounded limits and safe empty collections.
+- `header`
+- `footer`
+- `homepage`
+- `product_archive`
+- `product`
+- `product_category`
+- `search_results`
+- `blog_archive`
+- `article`
 
-## Public routes
+It also creates the published `home` ThemePage, whose selected template is the same theme's published `homepage` template. No unsupported product-brand or blog-category template type was invented.
 
-- `/` (`theme.homepage`) and `/shop` (`theme.shop`) render the active seeded homepage.
-- `/products` (`products.index`) and `/products/{product}` (`products.show`) reuse Ecommerce's controller and slug binding.
-- `/product-categories/{category}` (`product-categories.show`) reuses Ecommerce's category controller/binding.
-- `/blog/articles` (`articles.index`) and `/blog/articles/{slug}` (`articles.show`) reuse Blog's controller; article detail is publication-filtered.
-- Existing API route contracts were not changed.
+## Registered recovered blocks
 
-## Files changed
+The recovered runtime registry includes the seeded dynamic homepage blocks `hero_slider`, `promotion_banner_grid`, `featured_products`, `discounted_products`, `category_grid`, `brand_carousel`, and `blog_posts`, plus implemented dynamic variants `product_carousel` and `category_product_section`. It also includes the recovered header/footer blocks and the implemented product-detail, archive, and search blocks used by the seeded templates.
 
-- Theme seed, registry, renderer, block resolver, homepage controller/routes/layout/template, dynamic providers, and recovered posts block.
-- Ecommerce public routes and product publication guard.
-- Blog public routes, article publication guard/response, and sample seed status.
-- Root route conflict removal.
-- Theme builder expectation update and new runtime integration regression test.
+Every seeded block type has a registered Blade view. Dynamic queries remain in data providers/services rather than Blade, and optional empty data renders through empty-state views.
 
-## Regression coverage
+## Routes restored
 
-`PersianCommerceRuntimeIntegrationTest` covers complete same-theme/idempotent seeding, recovered block registration, fresh homepage header/content/footer rendering, named category/article routes, and rejection of unpublished articles. Existing seeder and builder tests were retained and updated only where the recovered homepage superseded starter copy.
+- `product-categories.show`: `GET /product-categories/{category}` with slug binding, owned by Ecommerce.
+- `articles.show`: `GET /blog/articles/{slug}`, owned by Blog and restricted to published articles in its Theme-rendered web action.
 
-## Verification results
+The Blog JSON `index` and `show` actions remain used by the existing API routes.
 
-- `composer dump-autoload`: passed.
-- `php artisan package:discover`: passed.
-- `php artisan optimize:clear`: passed.
-- `php artisan migrate:fresh --seed`: passed from an empty database.
-- `php artisan route:list --except-vendor`: passed; 115 application routes listed.
-- `php artisan test`: **87 tests, 248 assertions passed**.
-- `npm run build`: passed (existing empty `app` chunk warning remains).
-- `npm audit`: 0 vulnerabilities.
-- `git diff --check`: passed.
-- Feature requests verify `/`, seeded homepage regions, product-category detail, published article detail, and unpublished article 404 behavior. Product/archive and Blog archive routes are present and use their surviving controllers.
+## Public pages verified
 
-## Fresh-install rendering
+- `/` homepage with active header, seeded builder data, dynamic blocks, and footer
+- authenticated ThemePage preview route remains available
+- `/shop` product archive
+- `/products/{product}` product detail
+- `/product-categories/{category}` product category
+- `/blog/articles` blog archive
+- `/blog/articles/{slug}` published article detail
 
-The active resolver selects Persian Commerce. The root homepage returns 200 and renders selected header, recovered homepage content, selected footer, and empty/minimal dynamic datasets without missing-variable or missing-route exceptions.
+Focused tests verify that unpublished product categories/articles are not exposed and empty datasets render safely.
 
-## Remaining placeholders and visual limitations
+## Tests added or strengthened
 
-- Product/category/article/archive endpoints retain their surviving controller response format; no new visual detail/archive templates were designed.
-- Recovered hero remains a CSS scroll-snap presentation without autoplay.
-- Cart, wishlist, newsletter submission, and other business interactions remain placeholders as required.
-- No visual QA or polish was performed.
-- Existing PHPUnit doc-comment metadata warnings remain outside this recovery scope.
+- Same-theme, published-default, homepage-template, and idempotency assertions
+- Seeded homepage block registration assertions
+- Fresh-seeded homepage header/content/footer rendering
+- Product-category and article named-route resolution through Theme presentation
+- Blog archive and article template/chrome assertions
+- Deterministic archive/search product fixtures and draft exclusion assertions
+
+Final suite: **101 passed, 326 assertions**. Four existing PHPUnit doc-comment metadata deprecation warnings remain in `EcommerceFlowTest`.
+
+## Verification
+
+- `composer dump-autoload`: passed
+- `php artisan package:discover`: passed
+- `php artisan optimize:clear`: passed
+- `php artisan migrate:fresh --seed`: passed
+- `php artisan route:list`: passed; both required names confirmed
+- `php artisan test`: passed, 101 tests and 326 assertions
+- `npm audit`: passed, 0 vulnerabilities
+- `npm run build`: passed with Vite 7.3.6
+- `git diff --check`: passed
+
+## Remaining runtime limitations
+
+- Product-brand and blog-category Theme template types were not added because the recovered `TemplateResolver` flow does not establish dedicated public presentation paths for them.
+- Article and blog-archive templates currently preserve the recovered empty builder structures; they render Theme chrome and accept context but no unsupported article-specific blocks were invented.
+- Cart, wishlist, newsletter submission, autoplay, and other new interactions remain intentionally unimplemented.
+- Visual QA and design polish were intentionally not started.
+
+## Partially reconstructed files touched
+
+No file classified as `RECONSTRUCTED_WITH_PARTIAL_CONFIDENCE` in `THEME_RECOVERY_FINAL_AUDIT.csv` was modified by this runtime repair. The work changed the Theme seeder, Blog controller/routes, and focused runtime regression tests.
 
 ## Recommended commit message
 

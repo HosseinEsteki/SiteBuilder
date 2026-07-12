@@ -1,8 +1,10 @@
 <?php
 
 use Ecommerce\Models\Product;
+use Ecommerce\Models\Category;
 use Public\Enums\PostStatus;
 use Theme\Models\Theme;
+use Theme\Database\Seeders\ThemeSeeder;
 use Theme\Services\TemplateResolver;
 
 beforeEach(fn () => $this->seed());
@@ -17,12 +19,13 @@ test('search route and seeded theme template render through theme chrome', funct
 });
 
 test('search shows published match through shared card and excludes draft', function () {
-    $published = Product::factory()->create(['name' => 'SEARCHABLE-PUBLISHED', 'slug' => 'searchable-published', 'status' => PostStatus::Published->name, 'category_id' => null, 'brand_id' => null]);
+    $category = Category::published()->firstOrFail();
+    $published = Product::factory()->create(['name' => 'SEARCHABLE-PUBLISHED', 'slug' => 'searchable-published', 'status' => PostStatus::Published->name, 'category_id' => $category->id, 'brand_id' => null]);
     $draft = $published->replicate();
     $draft->name = 'PRIVATE-SEARCH-NEEDLE'; $draft->slug = 'private-search-needle'; $draft->status = PostStatus::Draft->name; $draft->save();
 
     $this->get(route('theme.product-search', ['q' => $published->name]))->assertOk()->assertSee($published->name)->assertSee('data-product-card', false);
-    $this->get(route('theme.product-search', ['q' => 'PRIVATE-SEARCH-NEEDLE']))->assertOk()->assertDontSee('PRIVATE-SEARCH-NEEDLE')->assertSee('محصولی یافت نشد');
+    $this->get(route('theme.product-search', ['q' => 'PRIVATE-SEARCH-NEEDLE']))->assertOk()->assertDontSee('data-product-card', false)->assertSee('محصولی یافت نشد');
 });
 
 test('search escapes query and preserves query across sorting and filtering', function () {
@@ -33,6 +36,6 @@ test('search escapes query and preserves query across sorting and filtering', fu
 });
 
 test('theme seeding search template is idempotent', function () {
-    $this->seed(Theme\Database\Seeders\ThemeSeeder::class);
+    $this->seed(ThemeSeeder::class);
     expect(Theme::where('slug', 'persian-commerce')->firstOrFail()->templates()->where('type', 'search_results')->count())->toBe(1);
 });
