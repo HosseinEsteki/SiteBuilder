@@ -3,5 +3,5 @@
     @push('styles')<style>{{ $template->custom_css }}</style>@endpush
 @endif
 @section('content')
-    <main data-theme-template="{{ $template?->type ?? 'homepage' }}">{!! $renderedContent !!}</main>
+    <main id="main-content" data-theme-template="{{ $template?->type ?? 'homepage' }}">{!! $renderedContent !!}</main>
 @endsection

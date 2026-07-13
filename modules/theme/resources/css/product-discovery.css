@@ -15,6 +15,7 @@
 .theme-archive-header--left > .theme-container { direction: ltr; text-align: left; }
 .theme-archive-header--compact { padding-block: 1.5rem; }
 .theme-archive-header__count { color: #475569; }
+.theme-archive-header h1 { overflow-wrap: anywhere; }
 .theme-product-listing { min-width: 0; }
 .theme-product-listing .theme-empty { padding-block: clamp(2rem, 8vw, 5rem); text-align: center; }
 .theme-pagination a:focus-visible,

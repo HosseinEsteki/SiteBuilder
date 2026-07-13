@@ -46,7 +46,10 @@ it('registers every recovered homepage commerce block', function () {
 
 it('renders the fresh seeded homepage with header content and footer', function () {
     $this->get('/')->assertOk()
+        ->assertSee('dir="rtl"', false)
+        ->assertSee('href="#main-content"', false)
         ->assertSee('data-theme-region="header"', false)
+        ->assertSee('id="main-content"', false)
         ->assertSee('data-theme-block="hero_slider"', false)
         ->assertSee('data-theme-region="footer"', false);
 });
